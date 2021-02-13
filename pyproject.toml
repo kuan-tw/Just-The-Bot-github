@@ -8,6 +8,16 @@ authors = ["kuan 🇹🇼#6503"]
 python = "^3.8"
 discord = "^1.0.1"
 flask = "^1.1.2"
+utils = "^1.0.1"
+imgurpython = "^1.1.7"
+praw = "^7.1.0"
+config = "^0.5.0"
+dblpy = "^0.4.0"
+pandas = "^1.2.1"
+flatten-json = "^0.1.8"
+arrow = "^0.17.0"
+bs4 = "^0.0.1"
+cryptography = "^3.3.1"
 
 [tool.poetry.dev-dependencies]
 

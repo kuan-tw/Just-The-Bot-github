@@ -1,3 +1,4 @@
+
 import discord
 from discord.ext import commands
 import keep_alive
@@ -5,13 +6,16 @@ import os
 import asyncio
 import datetime
 import random
+import json
 
 intents = discord.Intents.all()
 
 def is_it_me(ctx):
   return ctx.author.id == 536445172247167016 or 542715105276723202
+  
 bot = commands.Bot(command_prefix='=', intents=intents)
 bot.remove_command('help')
+
 
 @bot.event
 async def on_ready():
@@ -23,11 +27,9 @@ async def on_ready():
       activity2 = discord.Game(f'{len(bot.guilds)} 個伺服器') 
       await bot.change_presence(status=discord.Status.online, activity=activity2)
       await asyncio.sleep(5)
-      activity3 = discord.Game(f'| 機器人版本 | 0.0.3 BETA |')
+      activity3 = discord.Game(f'| 機器人版本 | v0.1.6 BETA |')
       await bot.change_presence(status=discord.Status.online,activity=activity3)
       await asyncio.sleep(5)
-
-
 
 @bot.command()
 @commands.check(is_it_me)
@@ -83,8 +85,10 @@ async def shutdown(ctx):
 
 for filename in os.listdir('./cmds'):
 	if filename.endswith('.py'):
-		bot.load_extension(f'cmds.{filename[:-3]}')
+	  bot.load_extension(f'cmds.{filename[:-3]}')
+
+
 
 if __name__ == "__main__":
   keep_alive.keep_alive()
-  bot.run('NzcyMjg1MjQ1OTIzOTE3ODYy.X54crg.Bx92lAZTbzoqDoVxpYYplKlgs2k')
+  bot.run('NzcyMjg1MjQ1OTIzOTE3ODYy.X54crg.DlXCH9gjwL9GgCOG1bb5laybfoU')

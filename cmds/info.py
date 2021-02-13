@@ -77,7 +77,7 @@ class Info(commands.Cog):
       region = ":flag_hk:HongKong"
     else:
       region = ctx.guild.region
-    embed=discord.Embed(title='伺服器資訊',color=random.randint(150, 300))
+    embed=discord.Embed(title='伺服器資訊',color=random.randint(0, 0xffffff))
     embed.set_thumbnail(url=ctx.guild.icon_url)
     embed.add_field(name="📛名稱", value=f'{ctx.guild.name}', inline=True)  
     embed.add_field(name="🆔ID", value=f'{ctx.guild.id}', inline=True)  
@@ -91,6 +91,39 @@ class Info(commands.Cog):
     embed.add_field(name=f"用戶狀態 - {len(ctx.guild.members)}", value=f"線上 - {online}\n閒置 - {idle}\n請勿打擾 - {dnd}\n隱形/離線 - {offline}") 
     embed.add_field(name="🕒 伺服器創建於 (UTC)", value=f'{ctx.guild.created_at.__format__("%A/%d/%B/%Y  %H:%M:%S")}', inline=True)
     embed.set_footer(text='made by kuan 🇹🇼#6503')
+    await ctx.send(embed=embed)
+
+  @commands.command()
+  async def channel(self, ctx, *, channel:discord.TextChannel=None):
+    channel = ctx.channel if not channel else channel
+    embed = discord.Embed(title=f"關於頻道內容", colour=random.randint(0, 0xffffff),  timestamp= datetime.datetime.utcnow())
+    embed.add_field(name="📛頻道名稱", value=channel.name, inline=True)
+    embed.add_field(name="🆔️頻道ID", value=channel.id, inline=True)
+    embed.add_field(name="📁頻道類別", value=f"{'{}'.format(channel.category.name) if channel.category else '這個頻道不在任何類別內'}", inline=True)
+    embed.add_field(name="🌏頻道位置", value=channel.position, inline=True)
+    embed.add_field(name="🔸️頻道主題", value=f"{channel.topic if channel.topic else '此頻道沒有主題'}", inline=True)
+    embed.add_field(name="⏱頻道慢數時間", value=channel.slowmode_delay, inline=True)
+    embed.add_field(name="🔞NSFW", value=channel.is_nsfw(), inline=True)
+    embed.add_field(name="📣NEWS", value=channel.is_news(), inline=True)
+    embed.add_field(name="🕒頻道創建時間", value=channel.created_at.__format__("%Y/%m/%d %H:%M:%S"), inline=True)
+    embed.add_field(name="Channel Permissions Synced", value=channel.permissions_synced, inline=True)
+    embed.add_field(name="Channel Hash", value=hash(channel), inline=True)
+    await ctx.send(embed=embed)
+
+  @commands.command()
+  async def bot(self, ctx):
+    embed=discord.Embed(title="關於我的資訊", description="<:Python:747011617186906133> Discord.py v{} <:Python:747011617186906133>".format(discord.__version__), colour=random.randint(0, 0xffffff), timestamp= datetime.datetime.utcnow())
+    embed.set_thumbnail(url="https://cdn.discordapp.com/avatars/772285245923917862/d865ed1d5471d734fa336e334508e06c.webp?size=1024")
+    embed.add_field(name="📛機器人名稱", value=f"{self.bot.user}", inline=True)
+    embed.add_field(name="🆔️機器人ID", value="772285245923917862", inline=True)
+    embed.add_field(name="👑機器人創辦人名稱", value=f"kuan 🇹🇼#6503")
+    embed.add_field(name="👑機器人創辦人ID", value=f"542715105276723202")
+    embed.add_field(name="🔗加入Discord官方群", value="[Click me](https://discord.gg/ybQY4h8Sxq)", inline=True)
+    embed.add_field(name="🔗邀請機器人", value="[Click me](https://reurl.cc/pyXd9Q)")
+    embed.add_field(name="📥已加入伺服器", value=f'{len(self.bot.guilds)}', inline=True)
+    embed.add_field(name="👥已加入伺服器人數", value=f"{len(set(self.bot.get_all_members()))}")
+    embed.add_field(name=":green_book:已加入伺服器頻道", value=f"{len(set(self.bot.get_all_channels()))}")
+    embed.set_footer(text=f"kuan©2020, 2021 | {ctx.author.name} 輸入指令")
     await ctx.send(embed=embed)
 
 def setup(bot):
