@@ -91,4 +91,4 @@ for filename in os.listdir('./cmds'):
 
 if __name__ == "__main__":
   keep_alive.keep_alive()
-  bot.run('NzcyMjg1MjQ1OTIzOTE3ODYy.X54crg.oK3cUGk9MTOimTReQQj6pKFfWoM')
+  bot.run('TOKEN')
