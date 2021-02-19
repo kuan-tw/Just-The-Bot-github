@@ -18,8 +18,9 @@ class Help(commands.Cog):
     embed.add_field(name='主要指令', value='`ping` `inv` `say` `thinking` `random`', inline=True)
     embed.add_field(name='資訊類', value='`user` `server` `channel` `bot`', inline=True)
     embed.add_field(name='管理員指令', value='`anno` `clean` `kick` `ban`', inline=True)
-    embed.add_field(name='幫助類', value='`main` `info` `admin` `fun` `game` `gobal`')
+    embed.add_field(name='幫助類', value='`main` `info` `admin` `fun` `game` `gobal` `math`')
     embed.add_field(name='娛樂', value='`dice` `gay` `question` `num` `sayc`')
+    embed.add_field(name='數學', value='`plus` `minus` `times` `into`')
     embed.add_field(name='遊戲類', value='`skull` `skin` `mcserver`', inline=True)
     embed.add_field(name='國際', value='`corona` `weather`')
     embed.set_footer(text='made by kuan 🇹🇼#6503')
@@ -79,6 +80,15 @@ class Help(commands.Cog):
     embed = discord.Embed(title='指令列表-國際', color=random.randint(0, 0xffffff))
     embed.add_field(name='corona <國家>(若要查看全球國家打world)', value='查看某國疫情', inline=True)
     embed.add_field(name='weather <城市>', value='查看某城市的天氣')
+    await ctx.send(embed=embed)
+
+  @commands.command()
+  async def math(self, ctx):
+    embed= discord.Embed(title='指令列表-數學', color=random.randint(0, 0xffffff))
+    embed.add_field(name='plus <數字> <數字>', value='加法')
+    embed.add_field(name='minus <數字> <數字>', value='減法')
+    embed.add_field(name='times <數字> <數字>', value='乘法')
+    embed.add_field(name='into <數字> <數字>', value='除法')
     await ctx.send(embed=embed)
 
     

@@ -9,6 +9,9 @@ import math
 import random
 import io
 import requests
+from googleapiclient.discovery import build
+
+key = 'AIzaSyB6JYaKcPcJmJcdmNGLJUCtqPslB0lyr3k'
 
 class Corona(commands.Cog):
   def __init__(self, bot):
@@ -65,9 +68,6 @@ class Corona(commands.Cog):
             await channel.send(embed=embed)
     else:
         await channel.send("City not found.")
-        
-
-
 
 
 def setup(bot):
