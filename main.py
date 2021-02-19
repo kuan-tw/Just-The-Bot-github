@@ -7,7 +7,7 @@ import datetime
 import random
 import json
 from dotenv import load_dotenv
-from discord.utils import get
+from discord.utils import get 
 
 load_dotenv()
 
