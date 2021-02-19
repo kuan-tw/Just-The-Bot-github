@@ -7,6 +7,7 @@ import time
 import os
 import math
 import random
+from pyrandmeme import *
 
 answer = [ "是✔","不是❌","我不知道😔","可能:thinking:"]
 
@@ -68,6 +69,10 @@ class Fun(commands.Cog):
     await ctx.send("數數字完成")
 
   @commands.command()
+  async def meme(self, ctx):
+    await ctx.send(embed=await pyrandmeme())
+
+  @commands.command
   async def sayc(self, ctx, num:int, *,msg):
     await ctx.message.delete()
     for num in range(num):
