@@ -19,7 +19,7 @@ class Help(commands.Cog):
     embed.add_field(name='資訊類', value='`user` `server` `channel` `bot`', inline=True)
     embed.add_field(name='管理員指令', value='`anno` `clean` `kick` `ban`', inline=True)
     embed.add_field(name='幫助類', value='`main` `info` `admin` `fun` `game` `gobal` `math`')
-    embed.add_field(name='娛樂', value='`dice` `gay` `question` `num` `sayc`')
+    embed.add_field(name='娛樂', value='`dice` `gay` `question` `num` `sayc` `meme`')
     embed.add_field(name='數學', value='`plus` `minus` `times` `into`')
     embed.add_field(name='遊戲類', value='`skull` `skin` `mcserver`', inline=True)
     embed.add_field(name='國際', value='`corona` `weather`')
@@ -65,6 +65,7 @@ class Help(commands.Cog):
     embed.add_field(name='question', value='問問題')
     embed.add_field(name='num <起始數字> <次數>', value='數數字')
     embed.add_field(name='sayc <次數> <訊息>', value='刷屏功能')
+    embed.add_field(name='meme', value='隨機迷因')
     await ctx.send(embed=embed)
 
   @commands.command()
