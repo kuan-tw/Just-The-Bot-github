@@ -32,7 +32,7 @@ async def on_ready():
       activity2 = discord.Game(f'{len(bot.guilds)} 個伺服器') 
       await bot.change_presence(status=discord.Status.online, activity=activity2)
       await asyncio.sleep(5)
-      activity3 = discord.Game(f'| 機器人版本 | v0.1.6 BETA |')
+      activity3 = discord.Game(f'| 機器人版本 | v0.2 BETA |')
       await bot.change_presence(status=discord.Status.online,activity=activity3)
       await asyncio.sleep(5)
 
@@ -83,7 +83,7 @@ async def reload(ctx, extension):
     await ctx.send(embed=embed)
     
 @bot.command()
-@commands.check(is_it_me)
+@commands.is_owner()
 async def shutdown(ctx):
   await ctx.send("Shutting down...")
   await asyncio.sleep(1)

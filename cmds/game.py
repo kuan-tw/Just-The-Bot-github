@@ -48,6 +48,7 @@ class Game(commands.Cog):
     ip = x['ip']
     port = x['port']
     host = x['hostname']
+    ver = x['version']
     icon = f'https://api.mcsrvstat.us/icon/{address}'
     m = x['motd']
     motd = m['clean']
@@ -59,6 +60,7 @@ class Game(commands.Cog):
     embed.add_field(name='ip', value=ip, inline=True)
     embed.add_field(name='port', value=port, inline=True)
     embed.add_field(name='motd', value=motd, inline=True)
+    embed.add_field(name='版本', value=ver, inline=True)
     embed.add_field(name='線上玩家', value=online, inline=True)
     embed.add_field(name='最多可容納玩家', value=maxplayer, inline=True)
     embed.add_field(name='host', value=host, inline=True)

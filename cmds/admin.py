@@ -15,8 +15,7 @@ class Admin(commands.Cog):
   @commands.has_permissions(administrator=True)
   async def anno(self, ctx, *,msg):
     await ctx.message.delete()
-    embed=discord.Embed(title='公告', color=random.randint(0, 0xffffff))
-    embed.add_field(name='訊息', value=msg)
+    embed=discord.Embed(title='公告', description=msg, color=random.randint(0, 0xffffff))
     await ctx.send("||@everyone||", embed=embed)
   
   @commands.command()
@@ -71,6 +70,42 @@ class Admin(commands.Cog):
         await member.ban(reason=reason)
         user = self.bot.get_user(member.id)
         await user.send(embed=embedTW3)
+
+  @commands.command()
+  @commands.has_permissions(administrator=True)
+  async def mute(self, ctx, member:discord.Member=None,*, reason=None):
+    guild = ctx.guild
+    mutedRole = discord.utils.get(guild.roles, name="Muted")
+    mem = discord.utils.get(guild.roles, name='國民')
+
+    if not mutedRole:
+        mutedRole = await guild.create_role(name="Muted")
+
+        for channel in guild.channels:
+            await channel.set_permissions(mutedRole, speak=False, send_messages=False, read_message_history=True, read_messages=False)
+    embed = discord.Embed(title="muted", description=f"{member.mention} was muted ", colour=discord.Colour.light_gray())
+    embed.add_field(name="reason:", value=reason, inline=False)
+    await ctx.send(embed=embed)
+    await member.add_roles(mutedRole, reason=reason)
+    await member.remove_roles(mem)
+    await member.send(f" you have been muted from: {guild.name} reason: {reason}")
+  
+    
+  @commands.command()
+  @commands.has_permissions(administrator=True)
+  async def unmute(self, ctx, member: discord.Member):
+   guild = ctx.guild
+   mutedRole = discord.utils.get(guild.roles, name="Muted")
+   mem = discord.utils.get(guild.roles, name='國民')
+
+   await member.remove_roles(mutedRole)
+   await member.add_roles(mem)
+   await member.send(f" you have unmutedd from: - {ctx.guild.name}")
+   embed = discord.Embed(title="unmute", description=f" unmuted-{member.mention}",colour=discord.Colour.light_gray())
+   await ctx.send(embed=embed)
+
+  
+
 
   
 

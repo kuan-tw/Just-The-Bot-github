@@ -20,7 +20,7 @@ class Help(commands.Cog):
     embed.add_field(name='管理員指令', value='`anno` `clean` `kick` `ban`', inline=True)
     embed.add_field(name='幫助類', value='`main` `info` `admin` `fun` `game` `gobal` `math`')
     embed.add_field(name='娛樂', value='`dice` `gay` `question` `num` `sayc` `meme`')
-    embed.add_field(name='數學', value='`plus` `minus` `times` `into`')
+    embed.add_field(name='數學', value='`plus` `minus` `times` `into` `areseq`')
     embed.add_field(name='遊戲類', value='`skull` `skin` `mcserver`', inline=True)
     embed.add_field(name='國際', value='`corona` `weather`')
     embed.set_footer(text='made by kuan 🇹🇼#6503')
@@ -90,6 +90,7 @@ class Help(commands.Cog):
     embed.add_field(name='minus <數字> <數字>', value='減法')
     embed.add_field(name='times <數字> <數字>', value='乘法')
     embed.add_field(name='into <數字> <數字>', value='除法')
+    embed.add_field(name='areseq <第1項> <欲查看的項數> <公差>', value='等差數列')
     await ctx.send(embed=embed)
 
     

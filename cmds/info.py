@@ -112,13 +112,12 @@ class Info(commands.Cog):
 
   @commands.command()
   async def bot(self, ctx):
-    embed=discord.Embed(title="關於我的資訊", description="<:Python:747011617186906133> Discord.py v{} <:Python:747011617186906133>".format(discord.__version__), colour=random.randint(0, 0xffffff), timestamp= datetime.datetime.utcnow())
-    embed.set_thumbnail(url="https://cdn.discordapp.com/avatars/772285245923917862/d865ed1d5471d734fa336e334508e06c.webp?size=1024")
+    embed=discord.Embed(title="關於我的資訊", description="<:python:823390950403473439> Discord.py v{} <:python:823390950403473439>".format(discord.__version__), colour=random.randint(0, 0xffffff), timestamp= datetime.datetime.utcnow())
     embed.add_field(name="📛機器人名稱", value=f"{self.bot.user}", inline=True)
     embed.add_field(name="🆔️機器人ID", value="772285245923917862", inline=True)
     embed.add_field(name="👑機器人創辦人名稱", value=f"kuan 🇹🇼#6503")
     embed.add_field(name="👑機器人創辦人ID", value=f"542715105276723202")
-    embed.add_field(name="🔗加入Discord官方群", value="[Click me](https://discord.gg/ybQY4h8Sxq)", inline=True)
+    embed.add_field(name="🔗加入Discord官方群", value="[Click me](https://discord.gg/utpxQN4U5M)", inline=True)
     embed.add_field(name="🔗邀請機器人", value="[Click me](https://reurl.cc/pyXd9Q)")
     embed.add_field(name="📥已加入伺服器", value=f'{len(self.bot.guilds)}', inline=True)
     embed.add_field(name="👥已加入伺服器人數", value=f"{len(set(self.bot.get_all_members()))}")

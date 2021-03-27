@@ -26,7 +26,7 @@ class Main(commands.Cog):
 
   @commands.command()
   async def inv(self, ctx):
-    embed=discord.Embed(title='邀請連結', url='https://reurl.cc/pyXd9Q')
+    embed=discord.Embed(title='邀請連結', url='https://discord.com/api/oauth2/authorize?client_id=772285245923917862&permissions=0&scope=bot%20applications.commands')
     embed.set_footer(text='made by kuan 🇹🇼#6503')
     await ctx.send(embed=embed)
   

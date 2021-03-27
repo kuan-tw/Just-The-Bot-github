@@ -36,6 +36,19 @@ class Math(commands.Cog):
     embed = discord.Embed(title='除法', description=f'{a} ÷ {b} = {c}', color=random.randint(0, 0xffffff))
     await ctx.send(embed=embed)
 
+  @commands.command()
+  async def areseq(self, ctx, a1:int, n:int ,d:int):
+    an = a1 + (n-1) * d
+    embed = discord.Embed(title='等差數列', color=random.randint(0, 0xffffff))
+    embed.add_field(name='第1項', value=a1)
+    embed.add_field(name='項數', value=n)
+    embed.add_field(name='公差', value=d)
+    embed.add_field(name='計算出的答案', value=an)
+    embed.add_field(name='公式', value=f'{a1} + ({n} - 1) x {d} = {an}')
+    await ctx.send(embed=embed)
+
+
+
 
 
 
