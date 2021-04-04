@@ -9,7 +9,7 @@ import math
 import random
 import io
 import requests
-from googleapiclient.discovery import build
+
 
 key = 'AIzaSyB6JYaKcPcJmJcdmNGLJUCtqPslB0lyr3k'
 
@@ -27,13 +27,14 @@ class Corona(commands.Cog):
     deaths = response.json()['deaths']
     tdeaths = response.json()['todayDeaths']
     recovered = response.json()['recovered']
+    
     embed = discord.Embed(title='武漢肺炎疫情', description=f'國家:{country}', colour=random.randint(0, 0xffffff))
     embed.set_thumbnail(url="https://www.nord24.de/Bilder/Die-Zahl-der-im-Zusammenhang-mit-dem-Corona-Virus-69556.jpg")
-    embed.add_field(name='總確診數', value=cases, inline=True)
-    embed.add_field(name='今日確診', value=tcases, inline=True)
-    embed.add_field(name='死亡數', value=deaths, inline=True)
-    embed.add_field(name='今日死亡', value=tdeaths, inline=True)
-    embed.add_field(name='解除隔離', value=recovered, inline=True)
+    embed.add_field(name='總確診數', value=f'`{cases}`', inline=True)
+    embed.add_field(name='今日確診', value=f'`{tcases}`', inline=True)
+    embed.add_field(name='死亡數', value=f'`{deaths}`', inline=True)
+    embed.add_field(name='今日死亡', value=f'`{tdeaths}`', inline=True)
+    embed.add_field(name='解除隔離', value=f'`{recovered}`', inline=True)
     await ctx.send(embed=embed)
 
   @commands.command()
@@ -55,9 +56,11 @@ class Corona(commands.Cog):
             current_pressure = y["pressure"]
             current_humidity = y["humidity"]
             z = x["weather"]
+            s = x["sys"]
+            c = s["country"]
             weather_description = z[0]["description"]
             weather_description = z[0]["description"]
-            embed = discord.Embed(title=f"{city_name}的天氣",
+            embed = discord.Embed(title=f"{city_name},{c}",
                               color=ctx.guild.me.top_role.color,
                               timestamp=ctx.message.created_at,)
             embed.add_field(name="天氣", value=f"**{weather_description}**", inline=False)

@@ -19,8 +19,9 @@ arrow = "^0.17.0"
 bs4 = "^0.0.1"
 cryptography = "^3.3.1"
 python-dotenv = "^0.15.0"
-google-api-python-client = "^1.12.8"
 pyrandmeme = "^0.0.6"
+hypixel = "^0.7.9"
+google-api-python-client = "^2.1.0"
 
 [tool.poetry.dev-dependencies]
 

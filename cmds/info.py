@@ -88,7 +88,7 @@ class Info(commands.Cog):
     embed.add_field(name=f" 加成狀態", value=f'等級 - {int(ctx.guild.premium_tier)}\n次數 - {int(ctx.guild.premium_subscription_count)}', inline=True)
     embed.add_field(name=f"表情符號 - {len(ctx.guild.emojis)}", value=f'動態 - {ge}\n一般 - {e}', inline=True) 
     embed.add_field(name=f":file_folder:頻道數量 - {len(ctx.guild.channels)}", value=f":dividers:類別 - {category}\n:speech_balloon:文字 - {text}\n:loud_sound:語音 - {voice}\n📢公告 - {news}\n🔖商店 - {store}")
-    embed.add_field(name=f"用戶狀態 - {len(ctx.guild.members)}", value=f"線上 - {online}\n閒置 - {idle}\n請勿打擾 - {dnd}\n隱形/離線 - {offline}") 
+    embed.add_field(name=f"用戶狀態 - {len(ctx.guild.members)}", value=f"<a:online:827478619819212812>線上 - {online}\n<a:idle:827479101107077140>閒置 - {idle}\n<a:dnd:827479009403207681>請勿打擾 - {dnd}\n<a:offline:827478874627112990>隱形/離線 - {offline}") 
     embed.add_field(name="🕒 伺服器創建於 (UTC)", value=f'{ctx.guild.created_at.__format__("%A/%d/%B/%Y  %H:%M:%S")}', inline=True)
     embed.set_footer(text='made by kuan 🇹🇼#6503')
     await ctx.send(embed=embed)

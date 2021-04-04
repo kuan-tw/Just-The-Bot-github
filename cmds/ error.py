@@ -13,7 +13,7 @@ class Error(commands.Cog):
         if isinstance(error, commands.errors.CheckFailure):
             await ctx.send(embed=discord.Embed(description=":x: | 你沒有權限使用此指令", color=discord.Color.red()))
         else:
-            embed=discord.Embed(title=':x:指令錯誤', color=discord.Color.red())
+            embed=discord.Embed(title=':x: | 指令錯誤', color=discord.Color.red())
             embed.add_field(name='錯誤碼', value=error)
             await ctx.send(embed=embed)
 
