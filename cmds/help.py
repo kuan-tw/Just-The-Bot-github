@@ -16,7 +16,7 @@ class Help(commands.Cog):
   async def help(self, ctx):
     embed = discord.Embed(title='指令列表', description='prefix`=`', color=random.randint(0, 0xffffff))
     embed.add_field(name='⚒️主要指令', value='`ping` `inv` `say` `thinking` `random`', inline=True)
-    embed.add_field(name='🖥️資訊類', value='`user` `server` `channel` `bot`', inline=True)
+    embed.add_field(name='🖥️資訊類', value='`user` `server` `channel` `bot` `avatar`', inline=True)
     embed.add_field(name='⚙️管理員指令', value='`anno` `clean` `kick` `ban`', inline=True)
     embed.add_field(name='💡幫助類', value='`main` `info` `admin` `fun` `game` `gobal` `math`')
     embed.add_field(name='📺娛樂', value='`dice` `gay` `question` `num` `sayc` `meme`')

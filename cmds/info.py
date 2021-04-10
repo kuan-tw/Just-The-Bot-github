@@ -125,5 +125,14 @@ class Info(commands.Cog):
     embed.set_footer(text=f"kuan©2020, 2021 | {ctx.author.name} 輸入指令")
     await ctx.send(embed=embed)
 
+  @commands.command()
+  async def avatar(self, ctx, *, user:discord.Member=None):
+    user = ctx.author if not user else user
+    avatar_url = user.avatar_url
+    embed=discord.Embed(description=f'[圖片網址]({avatar_url})', colour=random.randint(0, 0xffffff))
+    embed.set_author(name=f"{user.name} 的頭像")
+    embed.set_image(url=avatar_url)
+    await ctx.send(embed=embed)
+
 def setup(bot):
   bot.add_cog(Info(bot))
