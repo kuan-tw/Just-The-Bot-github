@@ -23,6 +23,7 @@ class Help(commands.Cog):
     embed.add_field(name='🔬數學', value='`plus` `minus` `times` `into` `areseq`')
     embed.add_field(name='🕹️遊戲類', value='`skull` `skin` `mcserver`', inline=True)
     embed.add_field(name='🦠國際', value='`corona` `weather`')
+    embed.add_field(name='<:hypixel:830389994384130068>Hypixel', value='`hyp` `bw`')
     embed.set_footer(text='made by kuan 🇹🇼#6503')
     await ctx.send(embed=embed)
   
@@ -44,6 +45,7 @@ class Help(commands.Cog):
     embed.add_field(name='user', value='用戶資訊')
     embed.add_field(name='channel', value='頻道資訊')
     embed.add_field(name='bot', value='機器人資訊')
+    embed.add_field(name='avatar', value='查看頭像')
     embed.set_footer(text='made by kuan 🇹🇼#6503')
     await ctx.send(embed=embed)
 
@@ -92,6 +94,7 @@ class Help(commands.Cog):
     embed.add_field(name='into <數字> <數字>', value='除法')
     embed.add_field(name='areseq <第1項> <欲查看的項數> <公差>', value='等差數列')
     await ctx.send(embed=embed)
+
 
     
     

@@ -12,6 +12,8 @@ import requests
 
 API_KEY = '092f48b3-ea7c-43b8-87b9-b225836ee963'
 
+ranks = {"VIP":"[VIP]","VIP_PLUS":"[VIP+]","MVP":"[MVP]","MVP_PLUS":"[MVP+]","SUPERSTAR":"[MVP++]","YOUTUBER":"[YOUTUBE]","ADMIN":"[ADMIN]"}
+
 class Game(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
@@ -65,8 +67,6 @@ class Game(commands.Cog):
     embed.add_field(name='最多可容納玩家', value=maxplayer, inline=True)
     embed.add_field(name='host', value=host, inline=True)
     await ctx.send(embed=embed)
-
-
 
 
 def setup(bot):
