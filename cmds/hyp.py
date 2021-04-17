@@ -114,50 +114,90 @@ class Hyp(commands.Cog):
             return
     mc = requests.get(f"https://api.hypixel.net/player?key=092f48b3-ea7c-43b8-87b9-b225836ee963&uuid={data['id']}").json()
     p = mc["player"]
-    if "prefix" in p:
-                r = "[OWNER]"
+    if p == "null":
+      await message.edit(embed=discord.Embed(description=f":x: | 找不到 **{name}** 這個玩家",color=discord.Color.red()))
+      return
     else:
-                if "rank" in p:
-                    if str(p["rank"]) in ranks:
-                        r = ranks[p["rank"]]
-                    else:
-                        r = p["rank"]
-                else:
-                    if "mostRecentMonthlyPackageRank" in p:
-                        if str(p["mostRecentMonthlyPackageRank"]) in ranks:
-                            r = ranks[p["mostRecentMonthlyPackageRank"]]
-                        else:
-                            r = p["mostRecentMonthlyPackageRank"]
-                    else:
-                        if "newPackageRank" in p:
-                            if str(p["newPackageRank"]) in ranks:
-                                r = ranks[p["newPackageRank"]]
-                        else:
-                            r = ""
-    s = p['stats']
-    ac = p['achievements']
-    lv = ac['bedwars_level']
-    bwwins = ac['bedwars_wins']
-    b = s['Bedwars']
-    bwboxes = b['bedwars_boxes']
-    winsk = b['winstreak']
-    con = b['coins']
-    kills = b['kills_bedwars']
-    final = b['final_kills_bedwars']
-    bok = b['beds_broken_bedwars']
+      if "prefix" in p:
+                  r = "[OWNER]"
+      else:
+                  if "rank" in p:
+                      if str(p["rank"]) in ranks:
+                          r = ranks[p["rank"]]
+                      else:
+                          r = p["rank"]
+                  else:
+                      if "mostRecentMonthlyPackageRank" in p:
+                          if str(p["mostRecentMonthlyPackageRank"]) in ranks:
+                              r = ranks[p["mostRecentMonthlyPackageRank"]]
+                          else:
+                              r = p["mostRecentMonthlyPackageRank"]
+                      else:
+                          if "newPackageRank" in p:
+                              if str(p["newPackageRank"]) in ranks:
+                                  r = ranks[p["newPackageRank"]]
+                          else:
+                              r = ""
+      try:
+        s = p['stats']
+      except:
+        await message.edit(embed=discord.Embed(description=f":x: | 找不到 **{name}** 這個玩家",color=discord.Color.red()))
 
-    embed = discord.Embed(title=f'<:bed:830778190905344030>床戰資料', color=random.randint(0, 0xffffff))
-    embed.set_thumbnail(url=f"https://crafatar.com/renders/body/{data['id']}")
-    embed.add_field(name='[Rank]ID', value=f'{r}{name}')
-    embed.add_field(name='等級', value=lv)
-    embed.add_field(name='總勝利數', value=bwwins)
-    embed.add_field(name='獎勵箱數', value=bwboxes)
-    embed.add_field(name='連勝數', value=winsk)
-    embed.add_field(name='金幣', value=con)
-    embed.add_field(name='總擊殺數', value=kills)
-    embed.add_field(name='最終擊殺數', value=final)
-    embed.add_field(name='破壞床數', value=bok)
-    await message.edit (embed=embed)
+      ac = p['achievements']
+      try:
+        lv = ac['bedwars_level']
+      except:
+        lv = 'N/A'
+      
+      try:
+        bwwins = ac['bedwars_wins']
+      except:
+        bwwins = 'N/A'
+      try:
+        b = s['Bedwars']
+      except:
+        await message.edit(embed=discord.Embed(description=f":x: | 找不到 **{name}** 這個玩家",color=discord.Color.red()))
+        
+      bwboxes = b['bedwars_boxes']
+      try:
+        winsk = b['winstreak']
+      except:
+        winsk = 'N/A'
+      
+      try:
+        con = b['coins']
+      except:
+        con = 'N/A'
+      
+      try:
+        kills = b['kills_bedwars']
+      except:
+        kills = 'N/A'
+      
+      try:
+        final = b['final_kills_bedwars']
+      except:
+        final = 'N/A'
+      
+      try:
+        bok = b['beds_broken_bedwars']
+      except:
+        bok = 'N/A'
+
+
+      embed = discord.Embed(title=f'<:bed:830778190905344030>床戰資料', color=random.randint(0, 0xffffff))
+      embed.set_thumbnail(url=f"https://crafatar.com/renders/body/{data['id']}")
+      embed.add_field(name='[Rank]ID', value=f'{r}{name}')
+      embed.add_field(name='等級', value=lv)
+      embed.add_field(name='總勝利數', value=bwwins)
+      embed.add_field(name='獎勵箱數', value=bwboxes)
+      embed.add_field(name='連勝數', value=winsk)
+      embed.add_field(name='金幣', value=con)
+      embed.add_field(name='總擊殺數', value=kills)
+      embed.add_field(name='最終擊殺數', value=final)
+      embed.add_field(name='破壞床數', value=bok)
+      await message.edit (embed=embed)
+
 
 
 
