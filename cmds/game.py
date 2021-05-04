@@ -82,7 +82,7 @@ class Game(commands.Cog):
     embed.set_thumbnail(url=icon)
     embed.add_field(name='ip', value=ip, inline=True)
     embed.add_field(name='port', value=port, inline=True)
-    embed.add_field(name='motd', value=f'`motd`', inline=True)
+    embed.add_field(name='motd', value=f'`{motd}`', inline=True)
     embed.add_field(name='版本', value=ver, inline=True)
     embed.add_field(name='線上玩家', value=online, inline=True)
     embed.add_field(name='最多可容納玩家', value=maxplayer, inline=True)

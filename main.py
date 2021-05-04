@@ -32,7 +32,7 @@ async def on_ready():
       activity2 = discord.Game(f'{len(bot.guilds)} 個伺服器') 
       await bot.change_presence(status=discord.Status.online, activity=activity2)
       await asyncio.sleep(5)
-      activity3 = discord.Game(f'| 機器人版本 | v0.4 BETA |')
+      activity3 = discord.Game(f'| 機器人版本 | v0.5 BETA |')
       await bot.change_presence(status=discord.Status.online,activity=activity3)
       await asyncio.sleep(5)
 
