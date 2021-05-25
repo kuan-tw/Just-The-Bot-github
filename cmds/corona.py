@@ -20,30 +20,53 @@ class Corona(commands.Cog):
   @commands.command()
   async def corona(self, ctx, *, msg=None):
     if msg == None:
-      await ctx.send(embed=discord.Embed(description=f":x: | 請輸入一個國家",color=discord.Color.red()))
-      return
-    country = msg
-    url = f'https://coronavirus-19-api.herokuapp.com/countries/{country}?'
-    response = requests.get(url)
-    try:
-      ccountry = response.json()['country']
-    except:
-      await ctx.send(embed=discord.Embed(description=f":x: | 找不到 **{msg}** 這個國家",color=discord.Color.red()))
-      return   
-    cases = response.json()['cases']
-    tcases = response.json()['todayCases']
-    deaths = response.json()['deaths']
-    tdeaths = response.json()['todayDeaths']
-    recovered = response.json()['recovered']
+      res = requests.get('https://corona.lmao.ninja/v3/covid-19/all')
+      cases = res.json()['cases']
+      today = res.json()['todayCases']
+      deaths = res.json()['deaths']
+      tdeaths = res.json()['todayDeaths']
+      rev = res.json()['recovered']
+      trev = res.json()['todayRecovered']
+      tests = res.json()['tests']
+      embed = discord.Embed(title=f'世界疫情', color=random.randint(0, 0xffffff))
+      embed.set_thumbnail(url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQekmk0lSxs2C5lpjTqca-G6FgT0Gl8Xg3t_Q&usqp=CAU')
+      embed.add_field(name='累計確診  ', value=cases)
+      embed.add_field(name='今日確診  ', value=today)
+      embed.add_field(name='累計死亡  ', value=deaths)
+      embed.add_field(name='今日死亡  ', value=tdeaths)
+      embed.add_field(name='治癒  ', value=f'{rev}')
+      embed.add_field(name='今日治癒  ', value=trev)
+      embed.add_field(name='篩檢數  ', value=tests)
+      await ctx.send(embed=embed)
+    else:
+      url = f'https://corona.lmao.ninja/v3/covid-19/countries/{msg}' 
+      response = requests.get(url)
+      try:
+        country = response.json()['country']
+        ci = response.json()['countryInfo']
+        flag = ci['flag']
+        cases = response.json()['cases']
+        today = response.json()['todayCases']
+        deaths = response.json()['deaths']
+        tdeaths = response.json()['todayDeaths']
+        rev = response.json()['recovered']
+        trev = response.json()['todayRecovered']
+        tests = response.json()['tests']
+        embed = discord.Embed(title=f'{country}的疫情', color=random.randint(0, 0xffffff))
+        embed.set_thumbnail(url=flag)
+        embed.add_field(name='累計確診', value=cases)
+        embed.add_field(name='今日確診', value=today)
+        embed.add_field(name='累計死亡', value=deaths)
+        embed.add_field(name='今日死亡', value=tdeaths)
+        embed.add_field(name='治癒', value=f'{rev}')
+        embed.add_field(name='今日治癒', value=trev)
+        embed.add_field(name='篩檢數', value=tests)
+        await ctx.send(embed=embed)
+      except:
+        await ctx.send(embed=discord.Embed(description=f":x: | 未知的國家",color=discord.Color.red()))
     
-    embed = discord.Embed(title='武漢肺炎疫情', description=f'國家:{ccountry}', colour=random.randint(0, 0xffffff))
-    embed.set_thumbnail(url="https://www.nord24.de/Bilder/Die-Zahl-der-im-Zusammenhang-mit-dem-Corona-Virus-69556.jpg")
-    embed.add_field(name='總確診數', value=f'`{cases}`', inline=True)
-    embed.add_field(name='今日確診', value=f'`{tcases}`', inline=True)
-    embed.add_field(name='死亡數', value=f'`{deaths}`', inline=True)
-    embed.add_field(name='今日死亡', value=f'`{tdeaths}`', inline=True)
-    embed.add_field(name='解除隔離', value=f'`{recovered}`', inline=True)
-    await ctx.send(embed=embed)
+      
+
 
   @commands.command()
   async def weather(self, ctx, *,msg: str = None):
@@ -83,6 +106,7 @@ class Corona(commands.Cog):
             await channel.send(embed=embed)
     else:
         await ctx.send(embed=discord.Embed(description=f":x: | 找不到 **{msg}** 這個城市",color=discord.Color.red()))
+
     
 
 

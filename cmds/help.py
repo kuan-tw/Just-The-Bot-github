@@ -16,7 +16,7 @@ class Help(commands.Cog):
   async def help(self, ctx, *, msg=None):
     if msg is None :
       embed = discord.Embed(title='幫助', color=random.randint(0, 0xffffff))
-      embed.add_field(name='Hi 我是一個機器人\n若需要幫助請輸入`=help commands`\n有任何問題請加入官方支援群\n若想查看單獨的指令列表\n 可在`=help`輸入以下參數\n`main info admin fun game gobal math hypixel`', value='🛠️[官方支援群](https://discord.gg/utpxQN4U5M) \n▶️[邀請機器人](https://discord.com/oauth2/authorize?client_id=772285245923917862&permissions=0&scope=bot%20applications.commands)')
+      embed.add_field(name='Hi 我叫Just The Bot\n若需要幫助請輸入`=help commands`\n有任何問題請加入官方支援群\n若想查看單獨的指令列表\n 可在`=help`後輸入以下參數\n`main info admin fun game gobal math hypixel`', value='🛠️[官方支援群](https://discord.gg/utpxQN4U5M) \n▶️[邀請機器人](https://discord.com/oauth2/authorize?client_id=772285245923917862&permissions=0&scope=bot%20applications.commands)\n💻[官方網站(Beta)](https://just-the-bot.netlify.app/)')
       embed.set_footer(text='kuan 🇹🇼#6503版權所有\n kuan 🇹🇼#6503© 2020, 2021')
       await ctx.send(embed=embed)
     if msg is not None:
