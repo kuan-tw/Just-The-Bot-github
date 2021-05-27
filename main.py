@@ -36,23 +36,6 @@ async def on_ready():
       await bot.change_presence(status=discord.Status.online,activity=activity3)
       await asyncio.sleep(5)
 
-@bot.event
-async def on_member_join(self, member):
-  if str(member.guild.id) == "794519556881121320":
-    channel = self.bot.get_channel(809986358638280734)
-    channel1 = self.bot.get_channel(809986358638280734)
-    embed = discord.Embed(title=f'歡迎{member.mention}加入', color=random.randint(0, 0xffffff))
-    await channel1.send(embed=embed)
-
-@bot.event
-async def on_member_leave(self, member):
-  if str(member.guild.id) == "794519556881121320":
-    channel = self.bot.get_channel(809986358638280734)
-    channel1 = self.bot.get_channel(809986358638280734)
-    embed = discord.Embed(title=f'{member.mention}退出了', color=random.randint(0, 0xffffff))
-    await channel1.send(embed=embed)
-
-
 @bot.command()
 @commands.check(is_it_me)
 async def load(ctx, extension):

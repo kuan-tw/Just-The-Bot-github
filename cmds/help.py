@@ -21,7 +21,7 @@ class Help(commands.Cog):
       await ctx.send(embed=embed)
     if msg is not None:
       if msg == "commands":
-        c = discord.Embed(title='指令列表', description='prefix`=`', color=random.randint(0, 0xffffff))
+        c = discord.Embed(title='指令列表', description='prefix `=`\n <>表示必選\n[]表示可選', color=random.randint(0, 0xffffff))
         c.add_field(name='⚒️主要指令', value='`ping` `inv` `say` `thinking` `random`', inline=True)
         c.add_field(name='🖥️資訊類', value='`user` `server` `channel` `bot` `avatar`', inline=True)
         c.add_field(name='⚙️管理員指令', value='`anno` `clean` `kick` `ban`', inline=True)
@@ -29,7 +29,7 @@ class Help(commands.Cog):
         c.add_field(name='🔬數學', value='`plus` `minus` `times` `into` `areseq`')
         c.add_field(name='🕹️遊戲類', value='`skull` `skin` `mcserver`', inline=True)
         c.add_field(name='🦠國際', value='`corona` `weather`')
-        c.add_field(name='<:hypixel:830389994384130068>Hypixel', value='`hyp` `bw`')
+        c.add_field(name='<:hypixel:830389994384130068>Hypixel', value='`hyp` `bw` `hypimg`')
         c.set_footer(text='made by kuan 🇹🇼#6503')
         await ctx.send(embed=c)
       elif msg == "main":
@@ -54,8 +54,8 @@ class Help(commands.Cog):
         a = discord.Embed(title='指令列表-管理員指令',color=random.randint(50,300))
         a.add_field(name='anno', value='公告')
         a.add_field(name='clean', value='清理訊息')
-        a.add_field(name='kick <成員>', value='踢出成員')
-        a.add_field(name='ban <成員>', value='封鎖成員')
+        a.add_field(name='kick <成員> [原因]', value='踢出成員')
+        a.add_field(name='ban <成員> [原因]', value='封鎖成員')
         a.set_footer(text='made by kuan 🇹🇼#6503')
         await ctx.send(embed=a)
       elif msg == "fun":
@@ -75,7 +75,7 @@ class Help(commands.Cog):
         await ctx.send(embed=g)
       elif msg == "gobal":
         w = discord.Embed(title='指令列表-國際', color=random.randint(0, 0xffffff))
-        w.add_field(name='corona <國家>(若要查看全球國家打world)', value='查看某國疫情', inline=True)
+        w.add_field(name='corona [國家]', value='查看某國疫情', inline=True)
         w.add_field(name='weather <城市>', value='查看某城市的天氣')
         await ctx.send(embed=w)
       elif msg == "math":
@@ -90,6 +90,7 @@ class Help(commands.Cog):
         h = discord.Embed(title='指令列表-Hypixel', color=random.randint(0, 0xffffff))
         h.add_field(name='hyp <MCID>', value='Hypixel玩家資訊')
         h.add_field(name='bw <MCID>', value='Hypixel床戰玩家資訊')
+        h.add_field(name='hypimg <MCID>', value='Hypixel玩家資訊圖片版')
         await ctx.send(embed=h)
       else:
         error=discord.Embed(title=':x: | 未知的參數', color=discord.Color.red())

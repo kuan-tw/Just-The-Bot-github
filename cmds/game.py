@@ -31,7 +31,7 @@ class Game(commands.Cog):
     except:
       await ctx.send(embed=discord.Embed(description=f":x: | 找不到 **{msg}** 這個玩家",color=discord.Color.red()))
       return
-    embed = discord.Embed(title="minecraft 頭顱生成器", description="生成指令如下", colour=random.randint(0, 0xffffff))
+    embed = discord.Embed(title="minecraft 頭顱生成器", colour=random.randint(0, 0xffffff))
     embed.set_thumbnail(url=f"https://crafatar.com/avatars/{uuid}")
     embed.add_field(name="ID", value=msg, inline=True)
     embed.add_field(name="1.12-", value='`/give @p minecraft:skull 1 3 ' + '{SkullOwner:' + f'"{msg}" ' + '}`', inline=True)
@@ -51,7 +51,7 @@ class Game(commands.Cog):
     except:
       await ctx.send(embed=discord.Embed(description=f":x: | 找不到 **{msg}** 這個玩家",color=discord.Color.red()))
       return
-    embed = discord.Embed(title='minecraft skin 查詢', description='結果如下', colour=random.randint(0, 0xffffff))
+    embed = discord.Embed(title=f'{msg}', colour=random.randint(0, 0xffffff))
     embed.set_image(url=f"https://crafatar.com/renders/body/{uuid}")
     await ctx.send(embed=embed)
 

@@ -104,7 +104,11 @@ class Hyp(commands.Cog):
             await message.edit(embed= embed1)
 
   @commands.command()
-  async def bw(self, ctx, name):
+  async def bw(self, ctx, name=None):
+    if name == None:
+      await message.edit(embed=discord.Embed(description=f":x: | 請輸入一個玩家",color=discord.Color.red()))
+      return
+
     message = await ctx.send(embed=discord.Embed(
             description="<a:loading:830383608463228948> | 查詢中 請稍後",color=discord.Color.green()))
     try:
@@ -140,72 +144,66 @@ class Hyp(commands.Cog):
                               r = ""
       try:
         s = p['stats']
-      except:
-        await message.edit(embed=discord.Embed(description=f":x: | 找不到 **{name}** 這個玩家",color=discord.Color.red()))
-
-      ac = p['achievements']
-      try:
+        ac = p['achievements']
         lv = ac['bedwars_level']
-      except:
-        lv = 'N/A'
-      
-      try:
         bwwins = ac['bedwars_wins']
-      except:
-        bwwins = 'N/A'
-      try:
         b = s['Bedwars']
+        bwboxes = b['bedwars_boxes']
+        winsk = b['winstreak']
+        con = b['coins']
+        kills = b['kills_bedwars']
+        final = b['final_kills_bedwars']
+        bok = b['beds_broken_bedwars']
+        embed = discord.Embed(title=f'<:bed:830778190905344030>床戰資料', color=random.randint(0, 0xffffff))
+        embed.set_thumbnail(url=f"https://crafatar.com/renders/body/{data['id']}")
+        embed.add_field(name='[Rank]ID', value=f'{r}{name}')
+        embed.add_field(name='等級', value=lv)
+        embed.add_field(name='總勝利數', value=bwwins)
+        embed.add_field(name='獎勵箱數', value=bwboxes)
+        embed.add_field(name='連勝數', value=winsk)
+        embed.add_field(name='金幣', value=con)
+        embed.add_field(name='總擊殺數', value=kills)
+        embed.add_field(name='最終擊殺數', value=final)
+        embed.add_field(name='破壞床數', value=bok)
+        await message.edit (embed=embed)
       except:
         await message.edit(embed=discord.Embed(description=f":x: | 找不到 **{name}** 這個玩家",color=discord.Color.red()))
-        
-      bwboxes = b['bedwars_boxes']
+    # if type == "4v4v4v4":
+    #   fk = b['four_four_kills_bedwars']
+    #   fw = b['four_four_wins_bedwars']
+    #   fb = b['four_four_beds_broken_bedwars']
+    #   fws = b['four_four_winstreak']
+    #   ffk = b['four_four_final_kills_bedwars']
+    #   embed = discord.Embed(title='<:bed:830778190905344030>床戰資料-4v4v4v4', color=random.randint(0, 0xffffff))
+    #   embed.add_field(name='勝利數', value=fw)
+    #   embed.add_field(name='擊殺數', value=fk)
+    #   embed.add_field(name='最終擊殺數', value=ffk)
+    #   embed.add_field(name='破壞床數', value=fb)
+    #   embed.add_field(name='連勝數', value=fws)
+    #   await message.edit(embed=embed)
+    # else:
+    #   await message.edit(embed=discord.Embed(description=f":x: | 找不到 **{name}** 這個玩家",color=discord.Color.red()))
+  @commands.command()
+  async def hypimg(self, ctx, name=None):
+    if name == None:
+      await ctx.send(embed=discord.Embed(description=f":x: | 請輸入一個玩家",color=discord.Color.red()))
+    else:
       try:
-        winsk = b['winstreak']
+        url = f'https://api.mojang.com/users/profiles/minecraft/{name}' 
+        response = requests.get(url)
+        uuid = response.json()['id']
+        embed = discord.Embed(color=random.randint(0, 0xffffff))
+        embed.set_image(url=f'https://hypixel.paniek.de/signature/{uuid}/general-tooltip')
+        await ctx.send(embed=embed)
       except:
-        winsk = 'N/A'
-      
-      try:
-        con = b['coins']
-      except:
-        con = 'N/A'
-      
-      try:
-        kills = b['kills_bedwars']
-      except:
-        kills = 'N/A'
-      
-      try:
-        final = b['final_kills_bedwars']
-      except:
-        final = 'N/A'
-      
-      try:
-        bok = b['beds_broken_bedwars']
-      except:
-        bok = 'N/A'
-
-
-      embed = discord.Embed(title=f'<:bed:830778190905344030>床戰資料', color=random.randint(0, 0xffffff))
-      embed.set_thumbnail(url=f"https://crafatar.com/renders/body/{data['id']}")
-      embed.add_field(name='[Rank]ID', value=f'{r}{name}')
-      embed.add_field(name='等級', value=lv)
-      embed.add_field(name='總勝利數', value=bwwins)
-      embed.add_field(name='獎勵箱數', value=bwboxes)
-      embed.add_field(name='連勝數', value=winsk)
-      embed.add_field(name='金幣', value=con)
-      embed.add_field(name='總擊殺數', value=kills)
-      embed.add_field(name='最終擊殺數', value=final)
-      embed.add_field(name='破壞床數', value=bok)
-      await message.edit (embed=embed)
-
-
+        await ctx.send(embed=discord.Embed(description=f":x: | 找不到 **{name}** 這個玩家",color=discord.Color.red()))
+    
+    
+    
 
 
     
 
-
-
-    
 
 
 def setup(bot):
