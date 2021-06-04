@@ -9,7 +9,7 @@ class Error(commands.Cog):
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
         if hasattr(ctx.command, 'on_error'):
-            return
+           return
         if isinstance(error, commands.errors.CheckFailure):
             await ctx.send(embed=discord.Embed(description=":x: | 你沒有權限使用此指令", color=discord.Color.red()))
         else:

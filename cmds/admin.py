@@ -104,8 +104,6 @@ class Admin(commands.Cog):
    embed = discord.Embed(title="unmute", description=f" unmuted-{member.mention}",colour=discord.Colour.light_gray())
    await ctx.send(embed=embed)
 
-  
-
 
   
 
