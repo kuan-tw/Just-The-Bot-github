@@ -10,8 +10,12 @@ import random
 import io
 import requests
 
-ranks = {"VIP":"<:VIP1:849149582675148823><:VIP2:849149665844920330><:VIP3:849149715769065472>","VIP_PLUS":"<:VIP1p:849162779118403615><:VIP2p:849162636959678504><:VIP3p:849162164627177553>","MVP":"<:MVP1:849163934434590720><:MVP2:849164000885342239><:MVP3:849164044732858368>","MVP_PLUS":"<:mvp_plus1:849952191951011870><:mvp_plus2:849952252269035521><:mvp_plus3:849952501280014396><:plus_red:850266057989423135>","SUPERSTAR":"[MVP++]","YOUTUBER":"<:yt1:849165730931146773><:yt2:849165834160832520><:yt3:849165878787833857><:yt4:849165926141526017><:yt5:849165958278938645>","ADMIN":"<:admin1:849179000940265492><:admin2:849179041550041119><:admin3:849179078467911680><:admin4:849179126095282180>"}
+ranks = {"VIP":"<:VIP1:849149582675148823><:VIP2:849149665844920330><:VIP3:849149715769065472>","VIP_PLUS":"<:VIP1p:849162779118403615><:VIP2p:849162636959678504><:VIP3p:849162164627177553>","MVP":"<:MVP1:849163934434590720><:MVP2:849164000885342239><:MVP3:849164044732858368>","MVP_PLUS":f"<:mvp_plus1:849952191951011870><:mvp_plus2:849952252269035521><:mvp_plus3:849952501280014396><:plus_red:850266057989423135>","SUPERSTAR":"[MVP++]","YOUTUBER":"<:yt1:849165730931146773><:yt2:849165834160832520><:yt3:849165878787833857><:yt4:849165926141526017><:yt5:849165958278938645>","ADMIN":"<:admin1:849179000940265492><:admin2:849179041550041119><:admin3:849179078467911680><:admin4:849179126095282180>"}
 rankpluscolor = {"BLACK": "<:mvp_plus1:849952191951011870><:mvp_plus2:849952252269035521><:mvp_plus3:849952501280014396><:plus_black:849952545278525451>"}
+
+
+
+
 
 class Hyp(commands.Cog):
   def __init__(self, bot):
@@ -55,9 +59,7 @@ class Hyp(commands.Cog):
                             if str(p["newPackageRank"]) in ranks:
                                 r = ranks[p["newPackageRank"]]
                         else:
-                            r = ""
-            
-                          
+                            r = ""               
             if "networkExp" not in p:
                 network_level = 0
             else:
@@ -97,24 +99,29 @@ class Hyp(commands.Cog):
                     t = f"{work_seconds} 秒前"
             if name == "Technoblade":
               r = "<:pig1:849180613419991070><:pig2:849180648426045500><:pig3:849180680104968192><:pig4:849180713316253696>"
+            if name == "HypixelEvents":
+              r = "<:ev1:850715152944332842><:ev2:850715222225584159><:ev3:850715281491230740><:ev4:850715317066792970>"
             if str(r) == "NORMAL":
                 r = ""
             if 'monthlyPackageRank' in p:
               mr = p['monthlyPackageRank']
-              if mr == "NONE":
-                color = p['rankPlusColor']
-                embcolor = "<:plus_red:850266057989423135>"
-                if color == "BLACK":
-                  embcolor = "<:plus_black:849952545278525451>"
-                elif color == "GOLD":
-                  embcolor = "<:plus_orange:850220961868677170>"
-                elif color == "YELLOW":
-                  embcolor = "<:plus_yellow:850229249687814165>"
-                elif color == "DARK_GRAY":
-                  embcolor = "<:plus_gray:850230430166941736>"
-                r = f"<:mvp_plus1:849952191951011870><:mvp_plus2:849952252269035521><:mvp_plus3:849952501280014396>{embcolor}"
-          
-            
+              if "prefix" not in p:
+                if mr == "NONE":
+                  color = p['rankPlusColor']
+                  embcolor = "<:plus_red:850266057989423135>"
+                  if color == "BLACK":
+                    embcolor = "<:plus_black:849952545278525451>"
+                  elif color == "GOLD":
+                    embcolor = "<:plus_orange:850220961868677170>"
+                  elif color == "YELLOW":
+                    embcolor = "<:plus_yellow:850229249687814165>"
+                  elif color == "DARK_GRAY":
+                    embcolor = "<:plus_gray:850230430166941736>"
+                  elif color == "DARK_PURPLE":
+                    embcolor = "<:plus_purple:850399455048237057>"
+                  elif color == "GREEN":
+                    embcolor = "<:plus_green:850304607505743883>"
+                  r = f"<:mvp_plus1:849952191951011870><:mvp_plus2:849952252269035521><:mvp_plus3:849952501280014396>{embcolor}"
             embed1 = discord.Embed(title=f"{r}{p['displayname']}",colour=random.randint(0, 0xffffff))
             embed1.set_thumbnail(url=f"https://crafatar.com/renders/body/{data['id']}")
             embed1.add_field(name="UUID",value=data["id"])
@@ -123,8 +130,9 @@ class Hyp(commands.Cog):
             embed1.add_field(name="首次加入 • 最後登入",value=fl+" • "+t)
             await message.edit(embed= embed1)
 
-  # @commands.command()
-  # async def bw(self, ctx, name=None):
+  @commands.command()
+  async def bw(self, ctx, name=None):
+    await ctx.send("`🚧指令維修中`")
   #   if name == None:
   #     await message.edit(embed=discord.Embed(description=f":x: | 請輸入一個玩家",color=discord.Color.red()))
   #     return
