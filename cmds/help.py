@@ -24,8 +24,8 @@ class Help(commands.Cog):
         c = discord.Embed(title='指令列表', description='prefix `=`\n <>表示必選\n[]表示可選', color=random.randint(0, 0xffffff))
         c.add_field(name='⚒️主要指令', value='`ping` `inv` `say` `thinking` `random`', inline=True)
         c.add_field(name='🖥️資訊類', value='`user` `server` `channel` `bot` `avatar`', inline=True)
-        c.add_field(name='⚙️管理員指令', value='`anno` `clean` `kick` `ban`', inline=True)
-        c.add_field(name='📺娛樂', value='`dice` `gay` `question` `num` `sayc` `meme`')
+        c.add_field(name='⚙️管理員指令', value='`anno` `clean` `kick` `ban` `vote`', inline=True)
+        c.add_field(name='📺娛樂', value='`dice` `gay` `question` `num` `sayc` `meme` `eat`')
         c.add_field(name='🔬數學', value='`plus` `minus` `times` `into` `areseq`')
         c.add_field(name='🕹️遊戲類', value='`skull` `skin` `mcserver`', inline=True)
         c.add_field(name='🦠國際', value='`corona` `weather`')
@@ -56,6 +56,7 @@ class Help(commands.Cog):
         a.add_field(name='clean', value='清理訊息')
         a.add_field(name='kick <成員> [原因]', value='踢出成員')
         a.add_field(name='ban <成員> [原因]', value='封鎖成員')
+        a.add_field(name='vote <選項> <選項> [選項] [選項] ', value='投票')
         a.set_footer(text='made by kuan 🇹🇼#6503')
         await ctx.send(embed=a)
       elif msg == "fun":
@@ -66,6 +67,8 @@ class Help(commands.Cog):
         f.add_field(name='num <起始數字> <次數>', value='數數字')
         f.add_field(name='sayc <次數> <訊息>', value='刷屏功能')
         f.add_field(name='meme', value='隨機迷因')
+        f.add_field(name='eat <食物>', value='吃東西')
+        
         await ctx.send(embed=f)
       elif msg == "game":
         g = discord.Embed(title='指令列表-遊戲', color=random.randint(0, 0xffffff))

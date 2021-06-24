@@ -23,175 +23,180 @@ class Hyp(commands.Cog):
 
   @commands.command(description="查看玩家狀態或是Hypixel資料",usage="=hyp [玩家名]")
   async def hyp(self, ctx, name=None):
-        message = await ctx.send(embed=discord.Embed(
-            description="<a:loading:830383608463228948> | 查詢中 請稍後",color=discord.Color.green()))
-        try:
-            data = requests.get(f"https://api.mojang.com/users/profiles/minecraft/{name}").json()
-        except:
-            await message.edit(embed=discord.Embed(description=f":x: | 找不到 **{name}** 這個玩家",color=discord.Color.red()))
-            return
-        mc = requests.get(f"https://api.hypixel.net/player?key=092f48b3-ea7c-43b8-87b9-b225836ee963&uuid={data['id']}").json()
-        p = mc["player"]
-        if str(p) == "None":
-            embed = discord.Embed(title="Minecraft 玩家狀態",colour=random.randint(0, 0xffffff))
-            embed.add_field(name= "Name",value=name)
-            embed.add_field(name= "UUID",value=data["id"])
-            embed.set_thumbnail(url=f"https://crafatar.com/renders/body/{data['id']}")
-            await message.edit(embed= embed)
-            return
-        else:
-            if "prefix" in p:
+    if name == None:
+      await ctx.send(embed=discord.Embed(description=f":x: | 請輸入一個玩家",color=discord.Color.red()))
+    else:
+          message = await ctx.send(embed=discord.Embed(
+              description="<a:loading:830383608463228948> | 查詢中 請稍後",color=discord.Color.green()))
+          try:
+              data = requests.get(f"https://api.mojang.com/users/profiles/minecraft/{name}").json()
+          except:
+              await message.edit(embed=discord.Embed(description=f":x: | 找不到 **{name}** 這個玩家",color=discord.Color.red()))
+              return
+          mc = requests.get(f"https://api.hypixel.net/player?key=092f48b3-ea7c-43b8-87b9-b225836ee963&uuid={data['id']}").json()
+          p = mc["player"]
+          if str(p) == "None":
+              embed = discord.Embed(title="Minecraft 玩家狀態",colour=random.randint(0, 0xffffff))
+              embed.add_field(name= "Name",value=name)
+              embed.add_field(name= "UUID",value=data["id"])
+              embed.set_thumbnail(url=f"https://crafatar.com/renders/body/{data['id']}")
+              await message.edit(embed= embed)
+              return
+          else:
+              if "prefix" in p:
                 r = "<:owner1:849196627642155028><:owner2:849196670796562442><:owner3:849196722827558943><:owner4:849196873817784351>"
-            else:
-                if "rank" in p:
-                    if str(p["rank"]) in ranks:
-                        r = ranks[p["rank"]]
-                    else:
-                        r = p["rank"]
-                else:
-                    if "mostRecentMonthlyPackageRank" in p:
-                        if str(p["mostRecentMonthlyPackageRank"]) in ranks:
-                            r = ranks[p["mostRecentMonthlyPackageRank"]]
-                        else:
-                            r = p["mostRecentMonthlyPackageRank"]
-                    else:
-                        if "newPackageRank" in p:
-                            if str(p["newPackageRank"]) in ranks:
-                                r = ranks[p["newPackageRank"]]
-                        else:
-                            r = ""               
-            if "networkExp" not in p:
-                network_level = 0
-            else:
-                exp = p["networkExp"]
-                network_level = (math.sqrt((2 * exp) + 30625) / 50) - 2.5
-                network_level = round(network_level, 2)
-            if "karma" in p:
-                k = p["karma"]
-            else:
-                k = 0
-            if "firstLogin" not in p:
-                fl = "不可考"
-            else:
-                f = p["firstLogin"]/1000
-                fll = f + 28800
-                fl = datetime.datetime.fromtimestamp(int(fll)).strftime('%Y年%m月%d日 %H:%M:%S')
-            if "lastLogin" not in p:
-                t = "不可考"
-            else:
-                l = p["lastLogin"]/1000
-                lll = l + 28800
-                n = time.time()
-                no = n + 28800
-                work_seconds = int(no - lll)
-                if work_seconds >= 60:
-                    work_minutes = int((no - lll)/(60))
-                    if work_minutes >= 60:
-                        work_hours = int((no - lll)/(60*60))
-                        if work_hours >= 24:
-                            work_days= int((no - lll)/(24*60*60))
-                            t = f"{work_days}天前"
-                        else:
-                            t = f"{work_hours}小時前"
-                    else:
-                        t = f"{work_minutes}分鐘前"
-                else:
-                    t = f"{work_seconds} 秒前"
-            if name == "Technoblade":
-              r = "<:pig1:849180613419991070><:pig2:849180648426045500><:pig3:849180680104968192><:pig4:849180713316253696>"
-            if name == "HypixelEvents":
-              r = "<:ev1:850715152944332842><:ev2:850715222225584159><:ev3:850715281491230740><:ev4:850715317066792970>"
-            if str(r) == "NORMAL":
-                r = ""
-            if 'monthlyPackageRank' in p:
-              mr = p['monthlyPackageRank']
-              if "prefix" not in p:
-                if mr == "NONE":
-                  color = p['rankPlusColor']
-                  embcolor = "<:plus_red:850266057989423135>"
-                  if color == "BLACK":
-                    embcolor = "<:plus_black:849952545278525451>"
-                  elif color == "GOLD":
-                    embcolor = "<:plus_orange:850220961868677170>"
-                  elif color == "YELLOW":
-                    embcolor = "<:plus_yellow:850229249687814165>"
-                  elif color == "DARK_GRAY":
-                    embcolor = "<:plus_gray:850230430166941736>"
-                  elif color == "DARK_PURPLE":
-                    embcolor = "<:plus_purple:850399455048237057>"
-                  elif color == "GREEN":
-                    embcolor = "<:plus_green:850304607505743883>"
-                  r = f"<:mvp_plus1:849952191951011870><:mvp_plus2:849952252269035521><:mvp_plus3:849952501280014396>{embcolor}"
-            embed1 = discord.Embed(title=f"{r}{p['displayname']}",colour=random.randint(0, 0xffffff))
-            embed1.set_thumbnail(url=f"https://crafatar.com/renders/body/{data['id']}")
-            embed1.add_field(name="UUID",value=data["id"])
-            embed1.add_field(name="等級",value=network_level)
-            embed1.add_field(name="人品",value=k)
-            embed1.add_field(name="首次加入 • 最後登入",value=fl+" • "+t)
-            await message.edit(embed= embed1)
-
+              else:
+                if "monthlyPackageRank" in p:
+                  if p['monthlyPackageRank'] == "SUPERSTAR":
+                    r = "[MVP++]"
+                elif "rank" in p:
+                  if str(p["rank"]) in ranks:
+                    r = ranks[p["rank"]]
+                elif "rank" not in p:
+                  if "newPackageRank" in p:
+                    r = ranks[p['newPackageRank']] 
+                  else:
+                    r = ""
+              if "networkExp" not in p:
+                  network_level = 0
+              else:
+                  exp = p["networkExp"]
+                  network_level = (math.sqrt((2 * exp) + 30625) / 50) - 2.5
+                  network_level = round(network_level, 2)
+              if "karma" in p:
+                  k = p["karma"]
+              else:
+                  k = 0
+              if "firstLogin" not in p:
+                  fl = "不可考"
+              else:
+                  f = p["firstLogin"]/1000
+                  fll = f + 28800
+                  fl = datetime.datetime.fromtimestamp(int(fll)).strftime('%Y年%m月%d日 %H:%M:%S')
+              if "lastLogin" not in p:
+                  t = "不可考"
+              else:
+                  l = p["lastLogin"]/1000
+                  lll = l + 28800
+                  n = time.time()
+                  no = n + 28800
+                  work_seconds = int(no - lll)
+                  if work_seconds >= 60:
+                      work_minutes = int((no - lll)/(60))
+                      if work_minutes >= 60:
+                          work_hours = int((no - lll)/(60*60))
+                          if work_hours >= 24:
+                              work_days= int((no - lll)/(24*60*60))
+                              t = f"{work_days}天前"
+                          else:
+                              t = f"{work_hours}小時前"
+                      else:
+                          t = f"{work_minutes}分鐘前"
+                  else:
+                      t = f"{work_seconds} 秒前"
+              if name == "Technoblade":
+                r = "<:pig1:849180613419991070><:pig2:849180648426045500><:pig3:849180680104968192><:pig4:849180713316253696>"
+              if name == "HypixelEvents":
+                r = "<:ev1:850715152944332842><:ev2:850715222225584159><:ev3:850715281491230740><:ev4:850715317066792970>"
+              if str(r) == "NORMAL":
+                  r = ""
+              embed1 = discord.Embed(title=f"{r}{p['displayname']}",colour=random.randint(0, 0xffffff))
+              embed1.set_thumbnail(url=f"https://crafatar.com/renders/body/{data['id']}")
+              embed1.add_field(name="UUID",value=data["id"])
+              embed1.add_field(name="等級",value=network_level)
+              embed1.add_field(name="人品",value=k)
+              embed1.add_field(name="首次加入 • 最後登入",value=fl+" • "+t)
+              await message.edit(embed= embed1)
   @commands.command()
   async def bw(self, ctx, name=None):
-    await ctx.send("`🚧指令維修中`")
-  #   if name == None:
-  #     await message.edit(embed=discord.Embed(description=f":x: | 請輸入一個玩家",color=discord.Color.red()))
-  #     return
+    if name == None:
+      await ctx.send(embed=discord.Embed(description=f":x: | 請輸入一個玩家",color=discord.Color.red()))
+    else:
+      message = await ctx.send(embed=discord.Embed(description="<a:loading:830383608463228948> | 查詢中 請稍後",color=discord.Color.green()))
+      try:
+        data = requests.get(f"https://api.mojang.com/users/profiles/minecraft/{name}").json()
+      except:
+        await message.edit(embed=discord.Embed(description=f":x: | 找不到 **{name}** 這個玩家",color=discord.Color.red()))
+        return
+      mc = requests.get(f"https://api.hypixel.net/player?key=092f48b3-ea7c-43b8-87b9-b225836ee963&uuid={data['id']}").json()
+      p = mc["player"]
+      if "rank" not in p:
+        r = ""
+      if "prefix" in p:
+        if p['prefix'] == "§c[OWNER]":
+          r = "<:owner1:849196627642155028><:owner2:849196670796562442><:owner3:849196722827558943><:owner4:849196873817784351>"
+        elif p['prefix'] == "§d[PIG§b+++§d]" :
+          r = "<:pig1:849180613419991070><:pig2:849180648426045500><:pig3:849180680104968192><:pig4:849180713316253696>"
+        elif p['prefix'] == "§6[EVENTS]":
+          r = "<:ev1:850715152944332842><:ev2:850715222225584159><:ev3:850715281491230740><:ev4:850715317066792970>"
+      else:
+        if "monthlyPackageRank" in p:
+          if p['monthlyPackageRank'] == "SUPERSTAR":
+            r = "[MVP++]"
+        elif "rank" in p:
+          if str(p["rank"]) in ranks:
+            r = ranks[p["rank"]]
+        elif "rank" not in p:
+          if "newPackageRank" in p:
+            r = ranks[p['newPackageRank']] 
+          else:
+            r = ""
+    try:
+      p['displayname']
+    except:
+      await message.edit(embed=discord.Embed(description=f":x: | 找不到 **{name}** 這個玩家",color=discord.Color.red()))
+    try:
+      adv = p['achievements'] 
+      status = p['stats']
+      bw = status['Bedwars']
+    except:
+      await message.edit(embed=discord.Embed(description=f":x: | 你所搜尋的玩家可能沒有遊玩床戰",color=discord.Color.red()))
+    try:
+      lvl = adv['bedwars_level']
+    except:
+        lvl = "0"
+    try:
+      wins = adv['bedwars_wins']
+    except:
+      wins = "0"
+    try:
+      totalplaycount = bw['games_played_bedwars_1']
+    except:
+      totalplaycount = "0"
+    try:
+      winsk = bw['winstreak']
+    except:
+      winsk = "0"
+    try:
+      kills = bw['kills_bedwars']
+    except:
+      kills = "0"
+    try:
+      final = bw['final_kills_bedwars']
+    except:
+      final = "0"
+    try:
+      broken = bw['beds_broken_bedwars'] 
+    except:
+      broken = "0"
+    name = p['displayname']
+    #Page 1
+    totalkills = kills + final
+    
+    o = discord.Embed(title=f'{r}{name}的床戰資訊', color=random.randint(0, 0xffffff))
+    o.set_thumbnail(url=f"https://crafatar.com/renders/body/{data['id']}")
+    o.add_field(name='等級', value=lvl)
+    o.add_field(name='遊玩次數', value=totalplaycount)
+    o.add_field(name='勝利數', value=wins) 
+    o.add_field(name='總擊殺數', value=f'{totalkills}\n。擊殺數-{kills}\n。最終擊殺數-{final}')
+    o.add_field(name='破壞床數', value=broken) 
+    o.set_footer(text='頁數(開發中)')
+    await message.edit(embed=o)      
 
-  #   message = await ctx.send(embed=discord.Embed(description="<a:loading:830383608463228948> | 查詢中 請稍後",color=discord.Color.green()))
-  #   try:
-  #     data = requests.get(f"https://api.mojang.com/users/profiles/minecraft/{name}").json()
-  #   except:
-  #     await message.edit(embed=discord.Embed(description=f":x: | 找不到 **{name}** 這個玩家",color=discord.Color.red()))
-  #     return
-  #   mc = requests.get(f"https://api.hypixel.net/player?key=092f48b3-ea7c-43b8-87b9-b225836ee963&uuid={data['id']}").json()
-  #   p = mc["player"]
-  #   if p == "null":
-  #     await message.edit(embed=discord.Embed(description=f":x: | 找不到 **{name}** 這個玩家",color=discord.Color.red()))
-  #     return
-  #   else:
-  #     if "prefix" in p:
-  #       r = "[OWNER]"
-  #     else:
-  #       if "rank" in p:
-  #         if str(p["rank"]) in ranks:
-  #            r = ranks[p["rank"]]
-  #         else:
-  #           r = p["rank"]
-  #           else:
-  #             if "mostRecentMonthlyPackageRank" in p:
-  #               if str(p["mostRecentMonthlyPackageRank"]) in ranks:
-  #               r = ranks[p["mostRecentMonthlyPackageRank"]]
-  #               else:
-  #               r = p["mostRecentMonthlyPackageRank"]
-  #                 else:
-  #                  if "newPackageRank" in p:
-  #                     if str(p["newPackageRank"]) in ranks:
-  #                       r = ranks[p["newPackageRank"]]
-  #                   else:
-  #                     r = ""
-  #     s = p['stats']
-  #     ac = p['achievements']
-  #     lv = ac['bedwars_level']
-  #     bwwins = ac['bedwars_wins']
-  #     b = s['Bedwars']
-  #     bwboxes = b['bedwars_boxes']
-  #     winsk = b['winstreak']
-  #     con = b['coins']
-  #     kills = b['kills_bedwars']
-  #     final = b['final_kills_bedwars']
-  #     bok = b['beds_broken_bedwars']
-  #     embed = discord.Embed(title=f'<:bed:830778190905344030>床戰資料', color=random.randint(0, 0xffffff))
-  #     embed.set_thumbnail(url=f"https://crafatar.com/renders/body/{data['id']}")
-  #     embed.add_field(name='[Rank]ID', value=f'{r}{name}')
-  #     embed.add_field(name='等級', value=lv)
-  #     embed.add_field(name='總勝利數', value=bwwins)
-  #     embed.add_field(name='獎勵箱數', value=bwboxes)
-  #     embed.add_field(name='連勝數', value=winsk)
-  #     embed.add_field(name='金幣', value=con)
-  #     embed.add_field(name='總擊殺數', value=kills)
-  #     embed.add_field(name='最終擊殺數', value=final)
-  #     embed.add_field(name='破壞床數', value=bok)
-  #     await message.edit (embed = embed)
+    
+
+
+    
   @commands.command()
   async def hypimg(self, ctx, name=None):
     if name == None:
@@ -218,6 +223,7 @@ class Hyp(commands.Cog):
       await ctx.send(embed=embed)
     except:
       await ctx.send(embed=discord.Embed(description=f":x: | 找不到 **{name}** 這個玩家",color=discord.Color.red()))
+  
     
     
     

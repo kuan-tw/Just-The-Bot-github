@@ -10,6 +10,7 @@ import random
 import io
 import requests
 
+ntc = {"indea","n.korea"}
 
 key = 'AIzaSyB6JYaKcPcJmJcdmNGLJUCtqPslB0lyr3k'
 
@@ -38,6 +39,8 @@ class Corona(commands.Cog):
       embed.add_field(name='今日治癒  ', value=trev)
       embed.add_field(name='篩檢數  ', value=tests)
       await ctx.send(embed=embed)
+    elif msg.lower() in ntc:
+      await ctx.send(embed=discord.Embed(description=f":cry: | 這個資料庫並沒有提供這個國家的疫情喔 sorry~",color=discord.Color.red()))
     else:
       url = f'https://corona.lmao.ninja/v3/covid-19/countries/{msg}' 
       response = requests.get(url)
@@ -106,6 +109,7 @@ class Corona(commands.Cog):
             await channel.send(embed=embed)
     else:
         await ctx.send(embed=discord.Embed(description=f":x: | 找不到 **{msg}** 這個城市",color=discord.Color.red()))
+
 
     
 

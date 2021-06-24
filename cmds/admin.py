@@ -104,6 +104,54 @@ class Admin(commands.Cog):
    embed = discord.Embed(title="unmute", description=f" unmuted-{member.mention}",colour=discord.Colour.light_gray())
    await ctx.send(embed=embed)
 
+  @commands.command()
+  @commands.has_permissions(administrator=True)
+  async def vote(self, ctx, item=None, titem=None, ritem=None, fitem=None):
+    if item is None:
+      await ctx.send(embed=discord.Embed(title='請輸入2個選項', color=random.randint(0, 0xffffff)))
+    elif titem is None:
+      await ctx.send(embed=discord.Embed(title='請輸入2個選項', color=random.randint(0, 0xffffff)))
+    else: 
+      if item is not None:
+        if titem is not None:
+          if ritem is None:
+            embed = discord.Embed(title='投票', color=random.randint(0, 0xffffff))
+            embed.add_field(name=f'-1️⃣-', value=f'{item}')
+            embed.add_field(name=f'-2️⃣-', value=f'{titem}')
+            message = await ctx.send(embed=embed)
+            await message.add_reaction('1️⃣')
+            await message.add_reaction('2️⃣')
+    
+    if ritem is not None:
+      if fitem is None:
+        rembed = discord.Embed(title='投票', color=random.randint(0, 0xffffff))
+        rembed.add_field(name=f'-1️⃣-', value=f'{item}')
+        rembed.add_field(name=f'-2️⃣-', value=f'{titem}')
+        rembed.add_field(name=f'-3️⃣-', value=f'{ritem}')
+        rmessage = await ctx.send(embed=rembed)
+        await rmessage.add_reaction('1️⃣')
+        await rmessage.add_reaction('2️⃣')
+        await rmessage.add_reaction('3️⃣')
+
+    if ritem is not None:
+      if fitem is not None:
+        fembed = discord.Embed(title='投票', color=random.randint(0, 0xffffff))
+        fembed.add_field(name=f'-1️⃣-', value=f'{item}')
+        fembed.add_field(name=f'-2️⃣-', value=f'{titem}')
+        fembed.add_field(name=f'-3️⃣-', value=f'{ritem}')
+        fembed.add_field(name=f'-4️⃣-', value=f'{fitem}')
+        fmessage = await ctx.send(embed=fembed)
+        await fmessage.add_reaction('1️⃣')
+        await fmessage.add_reaction('2️⃣')
+        await fmessage.add_reaction('3️⃣')
+        await fmessage.add_reaction('4️⃣')
+
+    
+
+
+    
+    
+
 
   
 
