@@ -46,17 +46,21 @@ class Hyp(commands.Cog):
               if "prefix" in p:
                 r = "<:owner1:849196627642155028><:owner2:849196670796562442><:owner3:849196722827558943><:owner4:849196873817784351>"
               else:
-                if "monthlyPackageRank" in p:
-                  if p['monthlyPackageRank'] == "SUPERSTAR":
-                    r = "[MVP++]"
-                elif "rank" in p:
-                  if str(p["rank"]) in ranks:
+                  if "monthlyPackageRank" in p:
+                    if p['monthlyPackageRank'] == "SUPERSTAR":
+                      r = "[MVP++]"
+                  elif "rank" in p:
                     r = ranks[p["rank"]]
-                elif "rank" not in p:
-                  if "newPackageRank" in p:
-                    r = ranks[p['newPackageRank']] 
-                  else:
-                    r = ""
+                  elif "rank" not in p:
+                    if "newPackageRank" in p:
+                      r = ranks[p['newPackageRank']]
+                  if "rank" not in p:
+                    if "newPackageRank" in p:
+                      if "monthlyPackageRank" in p:
+                        if p['monthlyPackageRank'] == "NONE": 
+                          r = "[MVP+]"
+                    else:
+                      r = ""
               if "networkExp" not in p:
                   network_level = 0
               else:
@@ -134,11 +138,15 @@ class Hyp(commands.Cog):
           if p['monthlyPackageRank'] == "SUPERSTAR":
             r = "[MVP++]"
         elif "rank" in p:
-          if str(p["rank"]) in ranks:
             r = ranks[p["rank"]]
         elif "rank" not in p:
+            if "newPackageRank" in p:
+              r = ranks[p['newPackageRank']]
+        if "rank" not in p:
           if "newPackageRank" in p:
-            r = ranks[p['newPackageRank']] 
+            if "monthlyPackageRank" in p:
+              if p['monthlyPackageRank'] == "NONE": 
+                r = "[MVP+]"
           else:
             r = ""
     try:
@@ -223,6 +231,10 @@ class Hyp(commands.Cog):
       await ctx.send(embed=embed)
     except:
       await ctx.send(embed=discord.Embed(description=f":x: | 找不到 **{name}** 這個玩家",color=discord.Color.red()))
+
+
+
+
   
     
     
