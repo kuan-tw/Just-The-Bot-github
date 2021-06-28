@@ -10,8 +10,9 @@ import random
 import io
 import requests
 
-ranks = {"VIP":"<:VIP1:849149582675148823><:VIP2:849149665844920330><:VIP3:849149715769065472>","VIP_PLUS":"<:VIP1p:849162779118403615><:VIP2p:849162636959678504><:VIP3p:849162164627177553>","MVP":"<:MVP1:849163934434590720><:MVP2:849164000885342239><:MVP3:849164044732858368>","MVP_PLUS":f"<:mvp_plus1:849952191951011870><:mvp_plus2:849952252269035521><:mvp_plus3:849952501280014396><:plus_red:850266057989423135>","SUPERSTAR":"[MVP++]","YOUTUBER":"<:yt1:849165730931146773><:yt2:849165834160832520><:yt3:849165878787833857><:yt4:849165926141526017><:yt5:849165958278938645>","ADMIN":"<:admin1:849179000940265492><:admin2:849179041550041119><:admin3:849179078467911680><:admin4:849179126095282180>"}
+ranks = {"VIP":"<:VIP1:849149582675148823><:VIP2:849149665844920330><:VIP3:849149715769065472>","VIP_PLUS":"<:VIP1p:849162779118403615><:VIP2p:849162636959678504><:VIP3p:849162164627177553>","MVP":"<:MVP1:849163934434590720><:MVP2:849164000885342239><:MVP3:849164044732858368>","MVP_PLUS":f"[MVP+]","SUPERSTAR":"[MVP++]","YOUTUBER":"<:yt1:849165730931146773><:yt2:849165834160832520><:yt3:849165878787833857><:yt4:849165926141526017><:yt5:849165958278938645>","ADMIN":"<:admin1:849179000940265492><:admin2:849179041550041119><:admin3:849179078467911680><:admin4:849179126095282180>"}
 rankpluscolor = {"BLACK": "<:mvp_plus1:849952191951011870><:mvp_plus2:849952252269035521><:mvp_plus3:849952501280014396><:plus_black:849952545278525451>"}
+rs = ["VIP", "VIP_PLUS"]
 
 
 
@@ -23,6 +24,7 @@ class Hyp(commands.Cog):
 
   @commands.command(description="查看玩家狀態或是Hypixel資料",usage="=hyp [玩家名]")
   async def hyp(self, ctx, name=None):
+    # await ctx.send('`🚧指令維修中🚧`')
     if name == None:
       await ctx.send(embed=discord.Embed(description=f":x: | 請輸入一個玩家",color=discord.Color.red()))
     else:
@@ -45,22 +47,21 @@ class Hyp(commands.Cog):
           else:
               if "prefix" in p:
                 r = "<:owner1:849196627642155028><:owner2:849196670796562442><:owner3:849196722827558943><:owner4:849196873817784351>"
-              else:
-                  if "monthlyPackageRank" in p:
-                    if p['monthlyPackageRank'] == "SUPERSTAR":
-                      r = "[MVP++]"
-                  elif "rank" in p:
-                    r = ranks[p["rank"]]
-                  elif "rank" not in p:
-                    if "newPackageRank" in p:
-                      r = ranks[p['newPackageRank']]
-                  if "rank" not in p:
-                    if "newPackageRank" in p:
-                      if "monthlyPackageRank" in p:
-                        if p['monthlyPackageRank'] == "NONE": 
-                          r = "[MVP+]"
+              else:  
+                if "rank" in p:
+                  r = ranks[p["rank"]]
+                else:
+                    if "mostRecentMonthlyPackageRank" in p:
+                      if p['monthlyPackageRank'] != "NONE":
+                        r = ranks[p["mostRecentMonthlyPackageRank"]]
+                      else:
+                          r = ranks[p['newPackageRank']]
                     else:
-                      r = ""
+                        if "newPackageRank" in p:
+                          if str(p["newPackageRank"]) in ranks:
+                            r = ranks[p["newPackageRank"]]
+                        else:
+                          r = ""
               if "networkExp" not in p:
                   network_level = 0
               else:
@@ -113,6 +114,7 @@ class Hyp(commands.Cog):
               await message.edit(embed= embed1)
   @commands.command()
   async def bw(self, ctx, name=None):
+    # await ctx.send('`🚧指令維修中🚧`')
     if name == None:
       await ctx.send(embed=discord.Embed(description=f":x: | 請輸入一個玩家",color=discord.Color.red()))
     else:
@@ -134,69 +136,80 @@ class Hyp(commands.Cog):
         elif p['prefix'] == "§6[EVENTS]":
           r = "<:ev1:850715152944332842><:ev2:850715222225584159><:ev3:850715281491230740><:ev4:850715317066792970>"
       else:
-        if "monthlyPackageRank" in p:
-          if p['monthlyPackageRank'] == "SUPERSTAR":
-            r = "[MVP++]"
-        elif "rank" in p:
-            r = ranks[p["rank"]]
-        elif "rank" not in p:
-            if "newPackageRank" in p:
+        if "rank" in p:
+          r = ranks[p["rank"]]
+        else:
+          if "mostRecentMonthlyPackageRank" in p:
+            if p['monthlyPackageRank'] != "NONE":
+              r = ranks[p["mostRecentMonthlyPackageRank"]]
+            else:
               r = ranks[p['newPackageRank']]
-        if "rank" not in p:
-          if "newPackageRank" in p:
-            if "monthlyPackageRank" in p:
-              if p['monthlyPackageRank'] == "NONE": 
-                r = "[MVP+]"
           else:
-            r = ""
-    try:
-      p['displayname']
-    except:
+            if "newPackageRank" in p:
+              if str(p["newPackageRank"]) in ranks:
+                r = ranks[p["newPackageRank"]]
+              else:
+                r = ""
+    if p == "null":
       await message.edit(embed=discord.Embed(description=f":x: | 找不到 **{name}** 這個玩家",color=discord.Color.red()))
-    try:
-      adv = p['achievements'] 
-      status = p['stats']
-      bw = status['Bedwars']
-    except:
-      await message.edit(embed=discord.Embed(description=f":x: | 你所搜尋的玩家可能沒有遊玩床戰",color=discord.Color.red()))
-    try:
-      lvl = adv['bedwars_level']
-    except:
-        lvl = "0"
-    try:
-      wins = adv['bedwars_wins']
-    except:
-      wins = "0"
-    try:
-      totalplaycount = bw['games_played_bedwars_1']
-    except:
-      totalplaycount = "0"
-    try:
-      winsk = bw['winstreak']
-    except:
-      winsk = "0"
-    try:
-      kills = bw['kills_bedwars']
-    except:
-      kills = "0"
-    try:
-      final = bw['final_kills_bedwars']
-    except:
-      final = "0"
-    try:
-      broken = bw['beds_broken_bedwars'] 
-    except:
-      broken = "0"
-    name = p['displayname']
-    #Page 1
-    totalkills = kills + final
+    else:
+      try:
+        adv = p['achievements'] 
+        status = p['stats']
+        bw = status['Bedwars']
+      except:
+        await message.edit(embed=discord.Embed(description=f":x: | 找不到 **{name}** 這個玩家",color=discord.Color.red()))
+      try:
+        name = p['displayname']
+      except:
+        await message.edit(embed=discord.Embed(description=f":x: | 找不到 **{name}** 這個玩家",color=discord.Color.red()))
+      try:
+        lvl = adv['bedwars_level']
+      except:
+          lvl = "0"
+      try:
+        wins = adv['bedwars_wins']
+      except:
+        wins = "0"
+      try:
+        totalplaycount = bw['games_played_bedwars_1']
+      except:
+        totalplaycount = "0"
+      try:
+        winsk = bw['winstreak']
+      except:
+        winsk = "0"
+      try:
+        kills = bw['kills_bedwars']
+      except:
+        kills = "0"
+      try:
+        final = bw['final_kills_bedwars']
+      except:
+        final = "0"
+      try:
+        broken = bw['beds_broken_bedwars'] 
+      except:
+        broken = "0"
+      try:
+        dea = bw['deaths_bedwars']
+      except:
+        dea = 0
+      try:
+        fdea = bw['final_deaths_bedwars']
+      except:
+        fdea = 0
+      #Page 1
+      totalkills = kills + final
+      kdr = round(kills / dea, 2)
+      fkdr = round(final / fdea, 2)
     
-    o = discord.Embed(title=f'{r}{name}的床戰資訊', color=random.randint(0, 0xffffff))
+    o = discord.Embed(title=f'<:bed:830778190905344030>{r}{name}', color=random.randint(0, 0xffffff))
     o.set_thumbnail(url=f"https://crafatar.com/renders/body/{data['id']}")
     o.add_field(name='等級', value=lvl)
     o.add_field(name='遊玩次數', value=totalplaycount)
     o.add_field(name='勝利數', value=wins) 
-    o.add_field(name='總擊殺數', value=f'{totalkills}\n。擊殺數-{kills}\n。最終擊殺數-{final}')
+    o.add_field(name='總擊殺數', value=f'{totalkills}\n。擊殺數-{kills}\n。KDR-{kdr}\n。最終擊殺數-{final}\n。FKDR-{fkdr}')
     o.add_field(name='破壞床數', value=broken) 
     o.set_footer(text='頁數(開發中)')
     await message.edit(embed=o)      
