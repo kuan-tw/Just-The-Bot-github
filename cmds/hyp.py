@@ -37,6 +37,8 @@ class Hyp(commands.Cog):
               return
           mc = requests.get(f"https://api.hypixel.net/player?key=092f48b3-ea7c-43b8-87b9-b225836ee963&uuid={data['id']}").json()
           p = mc["player"]
+          status = requests.get(f"https://api.hypixel.net/status?key=092f48b3-ea7c-43b8-87b9-b225836ee963&uuid={data['id']}").json()
+          sess = status['session']
           if str(p) == "None":
               embed = discord.Embed(title="Minecraft 玩家狀態",colour=random.randint(0, 0xffffff))
               embed.add_field(name= "Name",value=name)
@@ -105,7 +107,12 @@ class Hyp(commands.Cog):
                 r = "<:ev1:850715152944332842><:ev2:850715222225584159><:ev3:850715281491230740><:ev4:850715317066792970>"
               if str(r) == "NORMAL":
                   r = ""
-              embed1 = discord.Embed(title=f"{r}{p['displayname']}",colour=random.randint(0, 0xffffff))
+              if sess['online'] == True:
+                stat = "<a:online:827478619819212812>"
+                t = "在線"
+              else:
+                stat = "<a:offline:827478874627112990>"
+              embed1 = discord.Embed(title=f"{stat}{r}{p['displayname']}",colour=random.randint(0, 0xffffff))
               embed1.set_thumbnail(url=f"https://crafatar.com/renders/body/{data['id']}")
               embed1.add_field(name="UUID",value=data["id"])
               embed1.add_field(name="等級",value=network_level)
@@ -245,6 +252,20 @@ class Hyp(commands.Cog):
     except:
       await ctx.send(embed=discord.Embed(description=f":x: | 找不到 **{name}** 這個玩家",color=discord.Color.red()))
 
+  @commands.command()
+  async def skyblock(self, ctx):
+    url = 'https://api.hypixel.net/skyblock/news?key=092f48b3-ea7c-43b8-87b9-b225836ee963'
+    response = requests.get(url)
+    i = response.json()['items']
+    p = i[0]
+    link = p['link']
+    text = p['text']
+    title = p['title']
+    embed = discord.Embed(title=title,color=random.randint(0, 0xffffff))
+    embed.add_field(name='時間', value=text)
+    embed.add_field(name='連結', value=link)
+    await ctx.send(embed=embed)
+    
 
 
 

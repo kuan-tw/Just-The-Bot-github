@@ -12,7 +12,6 @@ import requests
 
 API_KEY = '092f48b3-ea7c-43b8-87b9-b225836ee963'
 
-ranks = {"VIP":"[VIP]","VIP_PLUS":"[VIP+]","MVP":"[MVP]","MVP_PLUS":"[MVP+]","SUPERSTAR":"[MVP++]","YOUTUBER":"[YOUTUBE]","ADMIN":"[ADMIN]"}
 
 class Game(commands.Cog):
   def __init__(self, bot):
@@ -64,29 +63,34 @@ class Game(commands.Cog):
     url = f'https://api.mcsrvstat.us/2/{address}'
     response = requests.get(url)
     x = response.json()
-    ip = x['ip']
-    port = x['port']
     try:
+      ip = x['ip']
+      port = x['port']
       host = x['hostname']
+      ver = x['version']
+      icon = f'https://api.mcsrvstat.us/icon/{address}'
+      m = x['motd']
+      motd = m['clean']
+      p = x['players']
+      online = p['online']
+      maxplayer = p['max']
     except:
       await ctx.send(embed=discord.Embed(description=f":x: | 找不到 **{msg}** 這個伺服器",color=discord.Color.red()))
       return
-    ver = x['version']
-    icon = f'https://api.mcsrvstat.us/icon/{address}'
-    m = x['motd']
-    motd = m['clean']
-    p = x['players']
-    online = p['online']
-    maxplayer = p['max']
-    embed = discord.Embed(title='minecraft伺服器資訊', description=f'伺服器:{address}', colour=random.randint(0, 0xffffff))
+    try:
+      ae = motd[1]
+    except:
+      ae = ""
+    emotd = f"{motd[0]}\n{ae}"
+    embed = discord.Embed(title=f'{address}\n{emotd}', colour=random.randint(0, 0xffffff))
     embed.set_thumbnail(url=icon)
     embed.add_field(name='ip', value=ip, inline=True)
-    embed.add_field(name='port', value=port, inline=True)
-    embed.add_field(name='motd', value=f'`{motd}`', inline=True)
+    embed.add_field(name='host:port', value=f'{host}:{port}', inline=True)
     embed.add_field(name='版本', value=ver, inline=True)
-    embed.add_field(name='線上玩家', value=online, inline=True)
-    embed.add_field(name='最多可容納玩家', value=maxplayer, inline=True)
-    embed.add_field(name='host', value=host, inline=True)
+    embed.add_field(name='線上玩家/最多可容納玩家', value=f'{online}/{maxplayer}', inline=True)
+    if "list" in p:
+      plist = p['list']
+      embed.add_field(name='玩家', value='\n'.join(plist), inline=True)
     await ctx.send(embed=embed)
 
 
