@@ -36,6 +36,16 @@ class Hyp(commands.Cog):
               await message.edit(embed=discord.Embed(description=f":x: | 找不到 **{name}** 這個玩家",color=discord.Color.red()))
               return
           mc = requests.get(f"https://api.hypixel.net/player?key=092f48b3-ea7c-43b8-87b9-b225836ee963&uuid={data['id']}").json()
+          try:
+            guild = requests.get(f"https://api.hypixel.net/guild?key=092f48b3-ea7c-43b8-87b9-b225836ee963&player={data['id']}").json()
+            g = guild['guild']
+            gn = g['name']
+          except:
+            gn = "無公會"
+          try:
+            tag = f"[{g['tag']}]"
+          except:
+            tag = ""
           p = mc["player"]
           status = requests.get(f"https://api.hypixel.net/status?key=092f48b3-ea7c-43b8-87b9-b225836ee963&uuid={data['id']}").json()
           sess = status['session']
@@ -112,16 +122,18 @@ class Hyp(commands.Cog):
                 t = "在線"
               else:
                 stat = "<a:offline:827478874627112990>"
-              embed1 = discord.Embed(title=f"{stat}{r}{p['displayname']}",colour=random.randint(0, 0xffffff))
+              embed1 = discord.Embed(title=f"{stat}{r}{p['displayname']} {tag}",colour=random.randint(0, 0xffffff))
               embed1.set_thumbnail(url=f"https://crafatar.com/renders/body/{data['id']}")
               embed1.add_field(name="UUID",value=data["id"])
               embed1.add_field(name="等級",value=network_level)
               embed1.add_field(name="人品",value=k)
+              embed1.add_field(name="公會",value=gn)
               embed1.add_field(name="首次加入 • 最後登入",value=fl+" • "+t)
               await message.edit(embed= embed1)
   @commands.command()
   async def bw(self, ctx, name=None):
     # await ctx.send('`🚧指令維修中🚧`')
+    t = 0
     if name == None:
       await ctx.send(embed=discord.Embed(description=f":x: | 請輸入一個玩家",color=discord.Color.red()))
     else:
@@ -131,7 +143,7 @@ class Hyp(commands.Cog):
       except:
         await message.edit(embed=discord.Embed(description=f":x: | 找不到 **{name}** 這個玩家",color=discord.Color.red()))
         return
-      mc = requests.get(f"https://api.hypixel.net/player?key=092f48b3-ea7c-43b8-87b9-b225836ee963&uuid={data['id']}").json()
+      mc = requests.get(f"https://api.hypixel.net/player?key=092f48b3-ea7c-43b8-87b9-b225836ee963&name={name}").json()
       p = mc["player"]
       if "rank" not in p:
         r = ""
@@ -171,55 +183,207 @@ class Hyp(commands.Cog):
       except:
         await message.edit(embed=discord.Embed(description=f":x: | 找不到 **{name}** 這個玩家",color=discord.Color.red()))
       try:
-        lvl = adv['bedwars_level']
-      except:
+        try:
+          lvl = adv['bedwars_level']
+        except:
           lvl = "0"
-      try:
-        wins = adv['bedwars_wins']
+        try:
+          wins = adv['bedwars_wins']
+        except:
+          wins = "0"
+        try:
+          totalplaycount = bw['games_played_bedwars_1']
+        except:
+          totalplaycount = "0"
+        try:
+          winsk = bw['winstreak']
+        except:
+          winsk = "0"
+        try:
+          kills = bw['kills_bedwars']
+        except:
+          kills = "0"
+        try:
+          final = bw['final_kills_bedwars']
+        except:
+          final = "0"
+        try:
+          broken = bw['beds_broken_bedwars'] 
+        except:
+          broken = "0"
+        try:
+          dea = bw['deaths_bedwars']
+        except:
+          dea = "0"
+        try:
+          fdea = bw['final_deaths_bedwars']
+        except:
+          fdea = "0"
+        #Page 1
+        #page 2
+        #solo bw
+        try:
+          swsk = bw['eight_one_winstreak']
+        except:
+          swsk = "0"
+        try:
+          sbk = bw['eight_one_beds_broken_bedwars']
+        except:
+          sbk = "0"
+        try:
+          sd = bw['eight_one_deaths_bedwars']
+        except: 
+          sd = "0"
+        try:
+          sfd = bw['eight_one_final_deaths_bedwars']
+        except:
+          sfd = "0"
+        try:
+          sk = bw['eight_one_kills_bedwars']
+        except:
+          sk = "0"
+        try:
+          sfk = bw['eight_one_final_kills_bedwars']
+        except:
+          sfk = "0"
+        try:
+          sp = bw['eight_one_games_played_bedwars']
+        except:
+          sp = "0"
+        try:
+          sl = bw['eight_one_losses_bedwars']
+        except:
+          sl = "0"
+        #doable bw
+        try:
+          dp = bw['eight_two_games_played_bedwars']
+        except:
+          d = "0"
+        try:
+          dk = bw['eight_two_kills_bedwars']
+        except:
+          dk = "0"
+        try:
+          dwsk = bw['eight_two_winstreak']
+        except:
+          dwsk = "0"
+        try:
+          dw = bw['eight_two_wins_bedwars']
+        except:
+          dw = "0"
+        try:
+          dfk = bw['eight_two_final_kills_bedwars']
+        except:
+          dfk = "0"
+        try:
+          dd = bw['eight_two_deaths_bedwars']
+        except:
+          dd = "0"
+        try:
+          dfd = bw['eight_two_final_deaths_bedwars']
+        except:
+          dfd = "0"
+        try:
+          db = bw['eight_two_beds_broken_bedwars']
+        except:
+          db = "0"
       except:
-        wins = "0"
+        await message.edit(embed=discord.Embed(description=f":x: | 找不到 **{name}** 這個玩家",color=discord.Color.red()))
       try:
-        totalplaycount = bw['games_played_bedwars_1']
+        sw = sp - sl
+        sokdr = round(int(sk) / int(sd), 2)
+        sofkdr = round(int(sfk) / int(sfd), 2)
+        sotok = sk + sfk
+        dkdr = round(int(dk) / int(dd), 2)
+        dfkdr = round(int(dfk) / int(dfd), 2)
+        dtk = dk + dfk
+        totalkills = int(kills) + int(final)
+        kdr = round(int(kills) / int(dea), 2)
+        fkdr = round(int(final) / int(fdea), 2)
       except:
-        totalplaycount = "0"
-      try:
-        winsk = bw['winstreak']
-      except:
-        winsk = "0"
-      try:
-        kills = bw['kills_bedwars']
-      except:
-        kills = "0"
-      try:
-        final = bw['final_kills_bedwars']
-      except:
-        final = "0"
-      try:
-        broken = bw['beds_broken_bedwars'] 
-      except:
-        broken = "0"
-      try:
-        dea = bw['deaths_bedwars']
-      except:
-        dea = 0
-      try:
-        fdea = bw['final_deaths_bedwars']
-      except:
-        fdea = 0
-      #Page 1
-      totalkills = kills + final
-      kdr = round(kills / dea, 2)
-      fkdr = round(final / fdea, 2)
-    
-    o = discord.Embed(title=f'<:bed:830778190905344030>{r}{name}', color=random.randint(0, 0xffffff))
+        try:
+          sw = sp - sl
+        except:
+          sw = "N/A"
+        try:
+          sokdr = round(int(sk) / int(sd))
+        except:
+          sokdr = "N/A"
+        try:
+          sofkdr = round(int(sfk) / int(sfd), 2)
+        except:
+          sofkdr = "0"
+        try:
+          sotok = int(sk) + int(sfk)
+        except:
+          sotok = "0"
+        try:
+          dkdr = round(int(dk) / int(dd), 2)
+        except:
+          dkdr = "0"
+        try:
+          dfkdr = round(int(dfk) / int(dfd), 2)
+        except:
+          dfkdr = "0"
+        try:
+          dtk = int(dk) + int(dfk)
+        except:
+          dtk = "0"
+        try:
+          totalkills = int(kills) + int(final)
+        except:
+          totalkills = "0"
+        try:
+          kdr = round(int(kills) / int(dea), 2)
+        except:
+          kdr = "0"
+        try:
+          fkdr = round(int(final) / int(fdea), 2)
+        except:
+          fkdr = "0"
+    o = discord.Embed(title=f'<:bed:830778190905344030>[{lvl}☆] {r}{name}', color=random.randint(0, 0xffffff))
     o.set_thumbnail(url=f"https://crafatar.com/renders/body/{data['id']}")
-    o.add_field(name='等級', value=lvl)
     o.add_field(name='遊玩次數', value=totalplaycount)
     o.add_field(name='勝利數', value=wins) 
     o.add_field(name='總擊殺數', value=f'{totalkills}\n。擊殺數-{kills}\n。KDR-{kdr}\n。最終擊殺數-{final}\n。FKDR-{fkdr}')
     o.add_field(name='破壞床數', value=broken) 
-    o.set_footer(text='頁數(開發中)')
-    await message.edit(embed=o)      
+    o.set_footer(text='頁數 1/2')
+    await message.edit(embed=o) 
+    await message.add_reaction('1️⃣')
+    await message.add_reaction('2️⃣')
+    reactmoji = ["1️⃣","2️⃣"]
+    t = discord.Embed(title=f'[{lvl}☆]{r}{name}', color=random.randint(0, 0xffffff))
+    t.set_thumbnail(url=f"https://crafatar.com/renders/body/{data['id']}")
+    t.add_field(name=' 單人模式 ', value=f'遊玩次數-{sp}\n勝利數-{sw}\n總擊殺數-{sotok}\n。擊殺數-{sk}\n。最終擊殺數-{sfk}\n。KDR-{sokdr}\n。FKDR-{sofkdr}\n破壞床數-{sbk}')
+    t.add_field(name=' 雙人模式 ', value=f'遊玩次數-{dp}\n勝利數-{dw}\n總擊殺數-{dtk}\n。擊殺數-{dk}\n。最終擊殺數-{dfk}\n。KDR-{dkdr}\n。FKDR-{dfkdr}\n破壞床數-{db}')
+    t.set_footer(text=f'頁數 2/2 ')
+
+    def check_react(reaction, user):
+      if reaction.message.id != message.id:
+        return False
+      if user != ctx.message.author:
+        return False
+      if str(reaction.emoji) not in reactmoji:
+        return False
+      return True
+    while True:
+      try:
+        res, user = await self.bot.wait_for('reaction_add', check=check_react)
+      except asyncio.TimeoutError:
+        return await message.clear_reactions()
+      if user != ctx.message.author:
+        pass
+      elif '2️⃣' in str(res.emoji):
+        await message.remove_reaction("2️⃣",user)
+        await message.edit(embed=t)
+        page = 2
+      if '1️⃣' in str(res.emoji) and page == 2:
+        await message.remove_reaction("1️⃣",user)
+        await message.edit(embed=o)
+        page = 1
+
+  
+  
 
     
 
