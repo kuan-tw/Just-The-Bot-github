@@ -16,7 +16,7 @@ class Help(commands.Cog):
   async def help(self, ctx, *, msg=None):
     if msg is None :
       embed = discord.Embed(title='幫助', color=random.randint(0, 0xffffff))
-      embed.add_field(name='Hi 我叫Just The Bot\n若需要幫助請輸入`=help commands`\n有任何問題請加入官方支援群\n若想查看單獨的指令列表\n 可在`=help`後輸入以下參數\n`main info admin fun game gobal math hypixel`', value='🛠️[官方支援群](https://discord.gg/utpxQN4U5M) \n▶️[邀請機器人](https://discord.com/oauth2/authorize?client_id=772285245923917862&permissions=0&scope=bot%20applications.commands)\n💻[官方網站(Beta)](https://just-the-bot.netlify.app/)')
+      embed.add_field(name='Hi 我叫Just The Bot\n若需要幫助請輸入`=help commands`\n有任何問題請加入官方支援群\n若想查看單獨的指令列表\n 可在`=help`後輸入以下參數\n`main info admin fun game gobal math hypixel`', value='🛠️[官方支援群](https://discord.gg/utpxQN4U5M) \n▶️[邀請機器人](https://discord.com/oauth2/authorize?client_id=772285245923917862&permissions=0&scope=bot%20applications.commands)\n💻[官方網站(Beta)](https://just-the-bot.netlify.app/)\n⭐[贊助我](https://paypal.me/kuantw)')
       embed.set_footer(text='kuan 🇹🇼#6503版權所有\n kuan 🇹🇼#6503© 2020, 2021')
       await ctx.send(embed=embed)
     if msg is not None:
@@ -28,7 +28,7 @@ class Help(commands.Cog):
         c.add_field(name='📺娛樂', value='`dice` `gay` `question` `num` `sayc` `meme` `eat`')
         c.add_field(name='🔬數學', value='`plus` `minus` `times` `into` `areseq`')
         c.add_field(name='🕹️遊戲類', value='`skull` `skin` `mcserver`', inline=True)
-        c.add_field(name='🦠國際', value='`corona` `weather`')
+        c.add_field(name='🦠國際', value='`corona` `weather` `eq`')
         c.add_field(name='<:hypixel:830389994384130068>Hypixel', value='`hyp` `bw` `hypimg`')
         c.set_footer(text='made by kuan 🇹🇼#6503')
         await ctx.send(embed=c)
@@ -80,6 +80,7 @@ class Help(commands.Cog):
         w = discord.Embed(title='指令列表-國際', color=random.randint(0, 0xffffff))
         w.add_field(name='corona [國家]', value='查看某國疫情', inline=True)
         w.add_field(name='weather <城市>', value='查看某城市的天氣')
+        w.add_field(name='eq', value='地震報告')
         await ctx.send(embed=w)
       elif msg == "math":
         m = discord.Embed(title='指令列表-數學', color=random.randint(0, 0xffffff))

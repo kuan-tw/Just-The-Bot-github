@@ -8,6 +8,7 @@ import random
 import json
 from dotenv import load_dotenv
 from discord.utils import get 
+import requests
 
 
 
@@ -26,17 +27,32 @@ bot.remove_command('help')
 
 @bot.event
 async def on_ready():
-    print('>Bot is ready<')
-    while True:
-      activity = discord.Game(f'=help | 獲得幫助')
+  url = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/W-C0033-002?Authorization=CWB-B13B35B2-04DC-4338-80F2-CCCE784C5BEE"
+  response = requests.get(url)
+  r = response.json()
+  rec = r['records']
+  re = rec['record']
+  a = re[0]
+      
+  data = a['datasetInfo']
+  des = data['datasetDescription']
+  vt = data['validTime']
+      
+  st = vt['startTime']
+  et = vt['endTime']
+      
+  c = a['contents']
+  con = c['content']
+      
+  text = con['contentText']
+  embed = discord.Embed(title=des,description=text,color=random.randint(0, 0xffffff))
+  embed.add_field(name='時間', value=f'{st} ~ {et}')
+  while True:
+      activity = discord.Game(f'=help。In {len(bot.guilds)} servers')
       await bot.change_presence(status=discord.Status.online,activity=activity)
-      await asyncio.sleep(5)
-      activity2 = discord.Game(f'{len(bot.guilds)} 個伺服器') 
-      await bot.change_presence(status=discord.Status.online, activity=activity2)
-      await asyncio.sleep(5)
-      activity3 = discord.Game(f'| 機器人版本 | v0.6 BETA |')
-      await bot.change_presence(status=discord.Status.online,activity=activity3)
-      await asyncio.sleep(5)
+      channel = bot.get_channel(875237868786823219)
+      await channel.send(embed=embed)
+      await asyncio.sleep(600)
 
 
 @bot.command()

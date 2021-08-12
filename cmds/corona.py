@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from discord.ext import tasks, commands
 import json
 import asyncio
 import datetime
@@ -13,6 +14,7 @@ import requests
 ntc = {"indea","n.korea"}
 
 key = 'AIzaSyB6JYaKcPcJmJcdmNGLJUCtqPslB0lyr3k'
+
 
 class Corona(commands.Cog):
   def __init__(self, bot):
@@ -137,10 +139,16 @@ class Corona(commands.Cog):
     embed.add_field(name='編號', value=eqno)
     embed.add_field(name='地震', value=eqrc)
     embed.add_field(name='位置', value=loc)
-    embed.add_field(name='深度', value=dp)
+    embed.add_field(name='時間', value=ti)
+    embed.add_field(name='深度', value=f'{dp} 公里')
     embed.add_field(name='芮氏規模', value=val)
     embed.set_image(url=f"{img}")
+    embed.set_footer(text='中央氣象局')
     await ctx.send(embed=embed)
+  
+    
+ 
+
 
   
 
