@@ -39,6 +39,7 @@ class Fun(commands.Cog):
   #     if message.author.bot:
   #       return
   #     await message.channel.send("<:Qing:799233451626725376>")
+
   
   @commands.command()
   async def dice(self, ctx):

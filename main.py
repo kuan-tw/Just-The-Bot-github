@@ -9,6 +9,8 @@ import json
 from dotenv import load_dotenv
 from discord.utils import get 
 
+
+
 load_dotenv()
 
 token = os.getenv("DISCORD_BOT_SECRET")
@@ -35,6 +37,7 @@ async def on_ready():
       activity3 = discord.Game(f'| 機器人版本 | v0.6 BETA |')
       await bot.change_presence(status=discord.Status.online,activity=activity3)
       await asyncio.sleep(5)
+
 
 @bot.command()
 @commands.check(is_it_me)

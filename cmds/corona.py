@@ -110,6 +110,42 @@ class Corona(commands.Cog):
     else:
         await ctx.send(embed=discord.Embed(description=f":x: | 找不到 **{msg}** 這個城市",color=discord.Color.red()))
 
+  @commands.command()
+  async def eq(self, ctx):
+    url = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/E-A0015-001?Authorization=CWB-B13B35B2-04DC-4338-80F2-CCCE784C5BEE"
+    response = requests.get(url)
+    r = response.json()
+    rec = r['records']
+    eq = rec['earthquake']
+    z = eq[0]
+    eqno = z['earthquakeNo']
+    eqrc = z['reportContent']
+    img = z['reportImageURI']
+    q = z['earthquakeInfo']
+    ti = q['originTime']
+    d = q['depth']
+    ep = q['epiCenter']
+    mag = q['magnitude']
+    
+    dp = d['value']
+    loc = ep['location']
+    val = mag['magnitudeValue']
+
+    
+
+    embed = discord.Embed(title='最近的有感地震報告', color=random.randint(0, 0xffffff))
+    embed.add_field(name='編號', value=eqno)
+    embed.add_field(name='地震', value=eqrc)
+    embed.add_field(name='位置', value=loc)
+    embed.add_field(name='深度', value=dp)
+    embed.add_field(name='芮氏規模', value=val)
+    embed.set_image(url=f"{img}")
+    await ctx.send(embed=embed)
+
+  
+
+
+
 
     
 
