@@ -1,5 +1,6 @@
 import discord 
 from discord.ext import commands
+from discord_slash import SlashCommand, SlashContext
 import keep_alive
 import os
 import asyncio
@@ -22,37 +23,23 @@ def is_it_me(ctx):
   return ctx.author.id == 536445172247167016 or 542715105276723202
   
 bot = commands.Bot(command_prefix='=', intents=intents)
+slash = SlashCommand(bot, override_type=True, sync_commands=True, sync_on_cog_reload=True)
 bot.remove_command('help')
+
+
 
 
 @bot.event
 async def on_ready():
-  url = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/W-C0033-002?Authorization=CWB-B13B35B2-04DC-4338-80F2-CCCE784C5BEE"
-  response = requests.get(url)
-  r = response.json()
-  rec = r['records']
-  re = rec['record']
-  a = re[0]
-      
-  data = a['datasetInfo']
-  des = data['datasetDescription']
-  vt = data['validTime']
-      
-  st = vt['startTime']
-  et = vt['endTime']
-      
-  c = a['contents']
-  con = c['content']
-      
-  text = con['contentText']
-  embed = discord.Embed(title=des,description=text,color=random.randint(0, 0xffffff))
-  embed.add_field(name='時間', value=f'{st} ~ {et}')
+  print('Ready!')
   while True:
-      activity = discord.Game(f'=help。In {len(bot.guilds)} servers')
-      await bot.change_presence(status=discord.Status.online,activity=activity)
-      channel = bot.get_channel(875237868786823219)
-      await channel.send(embed=embed)
-      await asyncio.sleep(600)
+    await bot.change_presence(activity=discord.Streaming(name=f"=help | {len(bot.guilds)} 個伺服器", url="https://www.twitch.tv/kuan_owo_tw"))
+
+guild_ids = [794519556881121320]
+
+@slash.slash(name="ping",description="顯示延遲")
+async def _ping(ctx): 
+  await ctx.send(f"Pong! ({bot.latency*1000}ms)")
 
 
 @bot.command()

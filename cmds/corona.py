@@ -145,6 +145,104 @@ class Corona(commands.Cog):
     embed.set_image(url=f"{img}")
     embed.set_footer(text='中央氣象局')
     await ctx.send(embed=embed)
+
+  @commands.command()
+  async def alert(self, ctx):
+    try:
+      while True:
+        channel = self.bot.get_channel(875237868786823219)
+        url = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/W-C0033-002?Authorization=CWB-B13B35B2-04DC-4338-80F2-CCCE784C5BEE"
+        response = requests.get(url)
+        r = response.json()
+        rec = r['records']
+        re = rec['record']
+        a = re[0]
+            
+        data = a['datasetInfo']
+        des = data['datasetDescription']
+        vt = data['validTime']
+            
+        st = vt['startTime']
+        et = vt['endTime']
+            
+        c = a['contents']
+        con = c['content']
+            
+        text = con['contentText']
+        embed = discord.Embed(title=des,description=text,color=random.randint(0, 0xffffff))
+        embed.add_field(name='時間', value=f'{st} ~ {et}')
+        await channel.send(embed=embed)
+        await asyncio.sleep(600)
+    except:
+      while True:
+        await channel.send(embed=discord.Embed(title='目前無天氣特報',color=random.randint(0, 0xffffff)))
+        await asyncio.sleep(600)
+
+  @commands.command()
+  async def twrain(self, ctx, sid= None, mon=None):
+    if sid == None:
+      await ctx.send(embed=discord.Embed(description=f":x: | 請輸入測站ID",color=discord.Color.red()))
+    if mon == None:
+      await ctx.send(embed=discord.Embed(description=f":x: | 請輸入月份",color=discord.Color.red()))
+    try:
+      url = f'https://opendata.cwb.gov.tw/api/v1/rest/datastore/C-B0025-001?Authorization=CWB-B13B35B2-04DC-4338-80F2-CCCE784C5BEE&format=JSON&stationId={sid}&statistics=true'
+      response = requests.get(url)
+      r = response.json()
+      rec = r['records']
+      loc = rec['location']
+      a = loc[0]
+      s = a['station']
+
+      stid = s['stationID']
+      stname = s['stationName']
+      stype = s['stationAttribute']
+
+      o = a['stationObsStatistics']
+      p = o['precipitation']
+      m = p['monthly']
+
+      if mon == "1":
+        nl = m[0]
+      elif mon == "2":
+        nl = m[1]
+      elif mon == "3":
+        nl = m[2]
+      elif mon == "4":
+        nl = m[3]
+      elif mon == "5":
+        nl = m[4]
+      elif mon == "6":
+        nl = m[5]
+      elif mon == "7":
+        nl = m[6]
+      elif mon == "8":
+        nl = m[7]
+      elif mon == "9":
+        nl = m[8]
+      elif mon == "10":
+        nl = m[9]
+      elif mon == "11":
+        nl = m[10]
+      elif mon == "12":
+        nl = m[11]
+      else:
+        await ctx.send(embed=discord.Embed(description=f":x: | 找不到資料",color=discord.Color.red()))
+
+      ymon = nl['dataYearMonth']
+      total = nl['total']
+
+      embed = discord.Embed(title='全台雨量觀測',color=random.randint(0, 0xffffff))
+      embed.add_field(name='測站', value=f'測站ID - {stid}\n名稱 - {stname} \n 類別 - {stype}')
+      embed.add_field(name=ymon, value=f'{total} mm')
+      embed.set_thumbnail(url="https://i0.wp.com/static.fotor.com.cn/assets/stickers/51b26dd8-6229-4308-8204-88cd7c6b5386_thumb.png")
+      await ctx.send(embed=embed)
+    except:
+      await ctx.send(embed=discord.Embed(description=f":x: | 未知的測站ID([ID列表](https://e-service.cwb.gov.tw/wdps/obs/state.htm)) \n **列表中的測站不一定全部都可查詢**",color=discord.Color.red()))
+
+
+
+
+
   
     
  

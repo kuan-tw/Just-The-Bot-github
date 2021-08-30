@@ -35,9 +35,9 @@ class Hyp(commands.Cog):
           except:
               await message.edit(embed=discord.Embed(description=f":x: | 找不到 **{name}** 這個玩家",color=discord.Color.red()))
               return
-          mc = requests.get(f"https://api.hypixel.net/player?key=092f48b3-ea7c-43b8-87b9-b225836ee963&uuid={data['id']}").json()
+          mc = requests.get(f"https://api.hypixel.net/player?key=e9f0d85c-c4dc-4064-b687-ebcb4beac9c8&uuid={data['id']}").json()
           try:
-            guild = requests.get(f"https://api.hypixel.net/guild?key=092f48b3-ea7c-43b8-87b9-b225836ee963&player={data['id']}").json()
+            guild = requests.get(f"https://api.hypixel.net/guild?key=e9f0d85c-c4dc-4064-b687-ebcb4beac9c8&player={data['id']}").json()
             g = guild['guild']
             gn = g['name']
           except:
@@ -47,7 +47,7 @@ class Hyp(commands.Cog):
           except:
             tag = ""
           p = mc["player"]
-          status = requests.get(f"https://api.hypixel.net/status?key=092f48b3-ea7c-43b8-87b9-b225836ee963&uuid={data['id']}").json()
+          status = requests.get(f"https://api.hypixel.net/status?key=e9f0d85c-c4dc-4064-b687-ebcb4beac9c8&uuid={data['id']}").json()
           sess = status['session']
           if str(p) == "None":
               embed = discord.Embed(title="Minecraft 玩家狀態",colour=random.randint(0, 0xffffff))
@@ -143,7 +143,7 @@ class Hyp(commands.Cog):
       except:
         await message.edit(embed=discord.Embed(description=f":x: | 找不到 **{name}** 這個玩家",color=discord.Color.red()))
         return
-      mc = requests.get(f"https://api.hypixel.net/player?key=092f48b3-ea7c-43b8-87b9-b225836ee963&name={name}").json()
+      mc = requests.get(f"https://api.hypixel.net/player?key=e9f0d85c-c4dc-4064-b687-ebcb4beac9c8&name={name}").json()
       p = mc["player"]
       if "rank" not in p:
         r = ""
@@ -418,7 +418,7 @@ class Hyp(commands.Cog):
 
   @commands.command()
   async def skyblock(self, ctx):
-    url = 'https://api.hypixel.net/skyblock/news?key=092f48b3-ea7c-43b8-87b9-b225836ee963'
+    url = 'https://api.hypixel.net/skyblock/news?key=e9f0d85c-c4dc-4064-b687-ebcb4beac9c8'
     response = requests.get(url)
     i = response.json()['items']
     p = i[0]
