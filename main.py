@@ -1,6 +1,5 @@
 import discord 
 from discord.ext import commands
-from discord_slash import SlashCommand, SlashContext
 import keep_alive
 import os
 import asyncio
@@ -23,7 +22,6 @@ def is_it_me(ctx):
   return ctx.author.id == 536445172247167016 or 542715105276723202
   
 bot = commands.Bot(command_prefix='=', intents=intents)
-slash = SlashCommand(bot, override_type=True, sync_commands=True, sync_on_cog_reload=True)
 bot.remove_command('help')
 
 
@@ -35,11 +33,6 @@ async def on_ready():
   while True:
     await bot.change_presence(activity=discord.Streaming(name=f"=help | {len(bot.guilds)} 個伺服器", url="https://www.twitch.tv/kuan_owo_tw"))
 
-guild_ids = [794519556881121320]
-
-@slash.slash(name="ping",description="顯示延遲")
-async def _ping(ctx): 
-  await ctx.send(f"Pong! ({bot.latency*1000}ms)")
 
 
 @bot.command()

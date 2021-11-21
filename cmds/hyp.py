@@ -36,16 +36,6 @@ class Hyp(commands.Cog):
               await message.edit(embed=discord.Embed(description=f":x: | 找不到 **{name}** 這個玩家",color=discord.Color.red()))
               return
           mc = requests.get(f"https://api.hypixel.net/player?key=e9f0d85c-c4dc-4064-b687-ebcb4beac9c8&uuid={data['id']}").json()
-          try:
-            guild = requests.get(f"https://api.hypixel.net/guild?key=e9f0d85c-c4dc-4064-b687-ebcb4beac9c8&player={data['id']}").json()
-            g = guild['guild']
-            gn = g['name']
-          except:
-            gn = "無公會"
-          try:
-            tag = f"[{g['tag']}]"
-          except:
-            tag = ""
           p = mc["player"]
           status = requests.get(f"https://api.hypixel.net/status?key=e9f0d85c-c4dc-4064-b687-ebcb4beac9c8&uuid={data['id']}").json()
           sess = status['session']
@@ -122,12 +112,27 @@ class Hyp(commands.Cog):
                 t = "在線"
               else:
                 stat = "<a:offline:827478874627112990>"
+              try:
+                guild = requests.get(f"https://api.hypixel.net/guild?key=e9f0d85c-c4dc-4064-b687-ebcb4beac9c8&player={data['id']}").json()
+                g = guild['guild']
+                tag = f"[{g['tag']}]"
+              except:
+                tag = ""
+
               embed1 = discord.Embed(title=f"{stat}{r}{p['displayname']} {tag}",colour=random.randint(0, 0xffffff))
               embed1.set_thumbnail(url=f"https://crafatar.com/renders/body/{data['id']}")
               embed1.add_field(name="UUID",value=data["id"])
               embed1.add_field(name="等級",value=network_level)
               embed1.add_field(name="人品",value=k)
-              embed1.add_field(name="公會",value=gn)
+              try:
+                guild = requests.get(f"https://api.hypixel.net/guild?key=e9f0d85c-c4dc-4064-b687-ebcb4beac9c8&player={data['id']}").json()
+                g = guild['guild']
+                gn = g['name']
+                guil = embed1.add_field(name="公會",value=gn)
+              except:
+                guil = " "
+                gn = ""
+                tag = ""
               embed1.add_field(name="首次加入 • 最後登入",value=fl+" • "+t)
               await message.edit(embed= embed1)
   @commands.command()

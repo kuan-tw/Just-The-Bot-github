@@ -53,6 +53,7 @@ class Game(commands.Cog):
     embed = discord.Embed(title=f'{msg}', colour=random.randint(0, 0xffffff))
     embed.set_image(url=f"https://crafatar.com/renders/body/{uuid}")
     await ctx.send(embed=embed)
+  
 
   @commands.command()
   async def mcserver(self, ctx, *,msg=None):
