@@ -29,7 +29,7 @@ class Info(commands.Cog):
     embed.add_field(name="📋身分組:", value="".join([role.mention for role in roles]))
     embed.add_field(name="📋最高身分組:", value=member.top_role.mention)
     print(member.top_role.mention)
-    embed.set_footer(text='made by kuan 🇹🇼#6503')
+    embed.set_footer(text='made by kuanTW#6503')
     await ctx.send(embed=embed)
 
   @commands.command()
@@ -90,7 +90,7 @@ class Info(commands.Cog):
     embed.add_field(name=f":file_folder:頻道數量 - {len(ctx.guild.channels)}", value=f":dividers:類別 - {category}\n:speech_balloon:文字 - {text}\n:loud_sound:語音 - {voice}\n📢公告 - {news}\n🔖商店 - {store}")
     embed.add_field(name=f"用戶狀態 - {len(ctx.guild.members)}", value=f"<a:online:827478619819212812>線上 - {online}\n<a:idle:827479101107077140>閒置 - {idle}\n<a:dnd:827479009403207681>請勿打擾 - {dnd}\n<a:offline:827478874627112990>隱形/離線 - {offline}") 
     embed.add_field(name="🕒 伺服器創建於 (UTC)", value=f'{ctx.guild.created_at.__format__("%A/%d/%B/%Y  %H:%M:%S")}', inline=True)
-    embed.set_footer(text='made by kuan 🇹🇼#6503')
+    embed.set_footer(text='made by kuanTW#6503')
     await ctx.send(embed=embed)
 
   @commands.command()
@@ -115,7 +115,7 @@ class Info(commands.Cog):
     embed=discord.Embed(title="關於我的資訊", description="<:python:823390950403473439> Discord.py v{} <:python:823390950403473439>".format(discord.__version__), colour=random.randint(0, 0xffffff), timestamp= datetime.datetime.utcnow())
     embed.add_field(name="📛機器人名稱", value=f"{self.bot.user}", inline=True)
     embed.add_field(name="🆔️機器人ID", value="772285245923917862", inline=True)
-    embed.add_field(name="👑機器人創辦人名稱", value=f"kuan 🇹🇼#6503")
+    embed.add_field(name="👑機器人創辦人名稱", value=f"kuanTW#6503")
     embed.add_field(name="👑機器人創辦人ID", value=f"542715105276723202")
     embed.add_field(name="🔗加入Discord官方群", value="[Click me](https://discord.gg/utpxQN4U5M)", inline=True)
     embed.add_field(name="🔗邀請機器人", value="[Click me](https://reurl.cc/pyXd9Q)")

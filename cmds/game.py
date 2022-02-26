@@ -89,6 +89,7 @@ class Game(commands.Cog):
     embed.add_field(name='host:port', value=f'{host}:{port}', inline=True)
     embed.add_field(name='版本', value=ver, inline=True)
     embed.add_field(name='線上玩家/最多可容納玩家', value=f'{online}/{maxplayer}', inline=True)
+    embed.set_image(url=f'https://sr-api.sfirew.com/server/{address}/banner/motd.png')
     if "list" in p:
       plist = p['list']
       embed.add_field(name='玩家', value='\n'.join(plist), inline=True)

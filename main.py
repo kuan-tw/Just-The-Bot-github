@@ -49,7 +49,7 @@ async def load(ctx, extension):
     bot.load_extension(f'cmds.{extension}')
     embed=discord.Embed(title="Load", description=f"Load {extension}", color=ctx.author.color)
     await ctx.send(embed=embed)
-    
+
 @bot.command()
 @commands.check(is_it_me)
 async def unload(ctx, extension):

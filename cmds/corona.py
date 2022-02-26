@@ -44,8 +44,10 @@ class Corona(commands.Cog):
     elif msg.lower() in ntc:
       await ctx.send(embed=discord.Embed(description=f":cry: | 這個資料庫並沒有提供這個國家的疫情喔 sorry~",color=discord.Color.red()))
     else:
-      url = f'https://corona.lmao.ninja/v3/covid-19/countries/{msg}' 
+      url = f'https://corona.lmao.ninja/v3/covid-19/countries/{msg}'
+      url2 = f'https://disease.sh/v3/covid-19/vaccine/coverage/countries/{msg}?lastdays=1&fullData=false'
       response = requests.get(url)
+      v = requests.get(url2)
       try:
         country = response.json()['country']
         ci = response.json()['countryInfo']
